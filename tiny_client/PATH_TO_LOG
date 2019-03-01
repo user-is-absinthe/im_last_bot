@@ -1,0 +1,527 @@
+ERROR:telegram.ext.dispatcher:An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/messagehandler.py", line 169, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: echo() missing 1 required positional argument: 'answered'
+ERROR:telegram.ext.dispatcher:An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/messagehandler.py", line 169, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: echo() missing 1 required positional argument: 'answered'
+ERROR:telegram.ext.dispatcher:An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/messagehandler.py", line 169, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: echo() missing 1 required positional argument: 'answered'
+ERROR:telegram.ext.dispatcher:An uncaught error was raised while processing the update
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/dispatcher.py", line 279, in process_update
+    handler.handle_update(update, self)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/messagehandler.py", line 169, in handle_update
+    return self.callback(dispatcher.bot, update, **optional_args)
+TypeError: echo() missing 1 required positional argument: 'answered'
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689978>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689b00>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1076896d8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1076896d8>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1076896d8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1076896d8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689ef0>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075307b8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075304a8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075309b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075309b0>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075309b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075309b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530b00>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075306a0>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530780>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530c88>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530c88>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530c88>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530c88>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530b70>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530eb8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1074f9630>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769f710>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769f710>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769f710>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769f710>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769f7b8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fac8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fcc0>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fe80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fe80>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fe80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x10769fe80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530a58>: Failed to establish a new connection: [Errno 50] Network is down')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530198>: Failed to establish a new connection: [Errno 50] Network is down')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075306a0>: Failed to establish a new connection: [Errno 50] Network is down')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530630>: Failed to establish a new connection: [Errno 50] Network is down'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+OSError: [Errno 50] Network is down
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530630>: Failed to establish a new connection: [Errno 50] Network is down
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530630>: Failed to establish a new connection: [Errno 50] Network is down'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107530630>: Failed to establish a new connection: [Errno 50] Network is down'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1075309e8>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=1, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689198>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=0, connect=None, read=None, redirect=None)) after connection broken by 'NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x1076897f0>: Failed to establish a new connection: [Errno 61] Connection refused')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+ERROR:telegram.ext.updater:Error while getting Updates: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689320>: Failed to establish a new connection: [Errno 61] Connection refused'))
+ERROR:telegram.ext.dispatcher:No error handlers are registered, logging exception.
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 141, in _new_conn
+    (self.host, self.port), self.timeout, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 83, in create_connection
+    raise err
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/connection.py", line 73, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 617, in urlopen
+    chunked=chunked)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 360, in _make_request
+    self._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 857, in _validate_conn
+    super(HTTPSConnectionPool, self)._validate_conn(conn)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 289, in _validate_conn
+    conn.connect()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 284, in connect
+    conn = self._new_conn()
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connection.py", line 150, in _new_conn
+    self, "Failed to establish a new connection: %s" % e)
+telegram.vendor.ptb_urllib3.urllib3.exceptions.NewConnectionError: <telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689320>: Failed to establish a new connection: [Errno 61] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 203, in _request_wrapper
+    resp = self._con_pool.request(*args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 70, in request
+    **urlopen_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/request.py", line 148, in request_encode_body
+    return self.urlopen(method, url, **extra_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/poolmanager.py", line 244, in urlopen
+    response = conn.urlopen(method, u.request_uri, **kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 695, in urlopen
+    **response_kw)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/connectionpool.py", line 666, in urlopen
+    _stacktrace=sys.exc_info()[2])
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/vendor/ptb_urllib3/urllib3/util/retry.py", line 376, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+telegram.vendor.ptb_urllib3.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689320>: Failed to establish a new connection: [Errno 61] Connection refused'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 319, in _network_loop_retry
+    if not action_cb():
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/ext/updater.py", line 280, in polling_action_cb
+    allowed_updates=allowed_updates)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 65, in decorator
+    result = func(self, *args, **kwargs)
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/bot.py", line 1975, in get_updates
+    result = self._request.post(url, data, timeout=float(read_latency) + float(timeout))
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 309, in post
+    headers={'Content-Type': 'application/json'})
+  File "/Users/owl/Pycharm/PycharmProjects/im_last_bot/venv/lib/python3.7/site-packages/telegram/utils/request.py", line 209, in _request_wrapper
+    raise NetworkError('urllib3 HTTPError {0}'.format(error))
+telegram.error.NetworkError: urllib3 HTTPError HTTPSConnectionPool(host='api.telegram.org', port=443): Max retries exceeded with url: /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates (Caused by NewConnectionError('<telegram.vendor.ptb_urllib3.urllib3.connection.VerifiedHTTPSConnection object at 0x107689320>: Failed to establish a new connection: [Errno 61] Connection refused'))
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates
+WARNING:telegram.vendor.ptb_urllib3.urllib3.connectionpool:Retrying (Retry(total=2, connect=None, read=None, redirect=None)) after connection broken by 'ConnectTimeoutError(<telegram.vendor.ptb_urllib3.urllib3.connectionpool.HTTPSConnectionPool object at 0x1074e9f98>, 'Connect timed out. (connect timeout=5.0)')': /bot738655540:AAFaBrt-x9mFYoSDzTxDN9WzrTfhkwce3IM/getUpdates

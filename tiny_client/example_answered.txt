@@ -1,0 +1,61 @@
+{
+'update_id': 732563055,
+'message': {
+    'message_id': 29,
+    'date': 1551430550,
+    'chat': {
+        'id': 11111111111,  # user id
+        'type': 'private',
+        'username': 'username',
+        'first_name': 'first_name',
+        'last_name': 'last_name'
+        },
+    'text': 'ооли',
+    'entities': [],
+    'caption_entities': [],
+    'photo': [],
+    'new_chat_members': [],
+    'new_chat_photo': [],
+    'delete_chat_photo': False,
+    'group_chat_created': False,
+    'supergroup_chat_created': False,
+    'channel_chat_created': False,
+    'from': {
+        'id': 11111111111,
+        'first_name': 'first_name',
+        'is_bot': False,
+        'last_name': 'last_name',
+        'username': 'username',
+        'language_code': 'ru'
+        }
+    },
+'_effective_message': {
+    'message_id': 29,
+    'date': 1551430550,
+    'chat': {
+        'id': 11111111111,
+        'type': 'private',
+        'username': 'username',
+        'first_name': 'first_name',
+        'last_name': 'last_name'
+    },
+    'text': 'ооли',
+    'entities': [],
+    'caption_entities': [],
+    'photo': [],
+    'new_chat_members': [],
+    'new_chat_photo': [],
+    'delete_chat_photo': False,
+    'group_chat_created': False, 
+    'supergroup_chat_created': False, 
+    'channel_chat_created': False, 
+    'from': {
+        'id': 11111111111, 
+        'first_name': 'first_name', 
+        'is_bot': False, 
+        'last_name': 'last_name', 
+        'username': 'username', 
+        'language_code': 'ru'
+        }
+    }
+}
