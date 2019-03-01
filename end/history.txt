@@ -1,0 +1,5 @@
+01.03.19
+контрольное слово как хэш в отдельном файле
+БД sqlite
+Таблица ClientList: num, nickname, tgname, id, message для хранения очереди
+Таблица Banner: firma, text_b, period

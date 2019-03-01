@@ -1,11 +1,12 @@
-q = []
+import sqlite3
 
-q.append('eat')
-q.append('sleep')
-q.append('code')
+conn = sqlite3.connect("mydatabase.db") # или :memory: чтобы сохранить в RAM
+cursor = conn.cursor()
 
-print(q)
-# ['eat', 'sleep', 'code']
-
-# Осторожнее: медленно работает!
-print(q.pop(0)) # 'eat'
+# Создание таблицы
+cursor.execute("""create table if not exists ClientList
+                  (number int, nickname text, tgname text, id text, message text)
+               """)
+cursor.execute("""create table if not exists Banner
+                  (firma text, text_b text, period int)
+               """)
