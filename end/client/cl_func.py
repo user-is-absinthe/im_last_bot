@@ -9,12 +9,12 @@ cursor = conn.cursor()
 #                   (firma text, text_b text, period int)
 #                """)
 
-# Создание таблицы
+# Создание таблиц
 def start_defaullt():
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
     cursor.execute("""create table if not exists ClientList
-                      (id int, nickname text, tgname text, id_chat text, message text)
+                      (id int, nickname text, tgname text, id_chat text, status text, message text)
                    """)
     cursor.execute("""create table if not exists Banner
                       (firma text, text_b text, period int)
@@ -22,7 +22,7 @@ def start_defaullt():
     conn.commit()
 
 
-def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' 1, 'test', 'тест', 'f123', 'hello AN' ''')
+def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
     cursor.execute(sql)
     conn.commit()
@@ -45,20 +45,26 @@ def drop_data (table_name, num): # удаление выбывших
     # conn.commit()
 
 
-
 def prev_client (num):
     sql = "select * from ClientList where number == "+ str(num-1)
     cursor.execute(sql)
     row = cursor.fetchall()
     return row
 
+
 def all_client ():
     cursor.execute('select * from ClientList')
     rows = cursor.fetchall()
     return rows
+
 
 def first_client ():
     sql = 'select * from ClientList' # where id = 1
     cursor.execute(sql)
     row = cursor.fetchone()
     return row
+
+def im_in(current_id):
+    sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
+    cursor.execute(sql)
+    pass

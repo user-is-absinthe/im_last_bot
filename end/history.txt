@@ -3,3 +3,6 @@
 БД sqlite
 Таблица ClientList: num, nickname, tgname, id, message для хранения очереди
 Таблица Banner: firma, text_b, period
+
+07.03.19
+Таблица ClientList: id, nickname, tgname, idchat, status, message для хранения очереди
