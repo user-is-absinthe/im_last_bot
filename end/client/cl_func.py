@@ -9,7 +9,7 @@ cursor = conn.cursor()
 #                   (firma text, text_b text, period int)
 #                """)
 
-# Создание таблиц
+# Создание таблиц. Перед запуском измененной таблицы не забыть удалить старую базу
 def start_defaullt():
     conn = sqlite3.connect("mydatabase.db")
     cursor = conn.cursor()
@@ -34,21 +34,34 @@ def count ():
     count_l = count_l[0][0]
     return count_l
 
-def drop_data (table_name, num): # удаление выбывших
-    sql = 'delete from ' + str(table_name) + ' where id = ' + str(num)
+def drop_client (id):
+    sql = 'delete from ClientList where id = ' + str(id)
     cursor.execute(sql)
     conn.commit()
     # count_l = int(count())
-    # for i in range(num+1, count_l):
-    #     sql = 'update ' + str(table_name) + ' set number = ' + str(i-1) + ' where number = ' + str(i)
-    #     cursor.execute(sql)
-    # conn.commit()
+    # if  count_l == 0:
+    #     return 0
+    # for i in range(id+1, count_l):
+    #      sql = 'update ClientList set id = ' + str(i-1) + ' where id = ' + str(i)
+    #      cursor.execute(sql)
+    #      conn.commit()
 
+def drop_all_cl ():
+    sql = 'delete from ClientList'
+    cursor.execute(sql)
+    conn.commit()
 
-def prev_client (num):
-    sql = "select * from ClientList where number == "+ str(num-1)
+def prev_client (me_id):
+    sql = "select * from ClientList where id == "+ str(me_id-1)
     cursor.execute(sql)
     row = cursor.fetchall()
+    if len(row) == 0 and count() > 0:
+        i = 2
+        while len(row) == 0:
+            sql = "select * from ClientList where id == " + str(me_id - i)
+            cursor.execute(sql)
+            row = cursor.fetchall()
+            i = i +1
     return row
 
 
@@ -67,4 +80,15 @@ def first_client ():
 def im_in(current_id):
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
     cursor.execute(sql)
+    conn.commit()
+    pass
+
+def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'hujumnyj', '150319', 'сколько ещё под дверью сидеть?')
+    status = 'outside'
+    if count() > 0:
+        id = str(all_client()[-1][0]+ 1)
+    else:
+        id = 1
+    data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_chat) + '\', \'' + status + '\', \'' + message + '\''
+    insert_data('ClientList', str(data))
     pass

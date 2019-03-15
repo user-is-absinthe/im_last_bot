@@ -6,3 +6,10 @@
 
 07.03.19
 Таблица ClientList: id, nickname, tgname, idchat, status, message для хранения очереди
+def im_in
+
+15.03.19
+def registr
+def drop_all_cl
+def drop_client
+def prev_client
