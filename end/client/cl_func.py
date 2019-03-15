@@ -33,7 +33,7 @@ def insert_data (table_name, data): # данные в виде insert_data("Clie
 def select_cl(id):
     sql = "select * from ClientList where id == "+ str(id)
     cursor.execute(sql)
-    row = cursor.fetchall()
+    row = cursor.fetchone()
     return row
 
 def count ():
@@ -77,6 +77,13 @@ def prev_client (me_id):
             i = i +1
     return row
 
+def count_before(me_id):
+    sql = "select count(*) from ClientList where id < "+ str(me_id)
+    cursor.execute(sql)
+    count_l = cursor.fetchall()
+    count_l = count_l[0][0]
+    select_cl(me_id)[3]
+    return count_l
 
 def all_client ():# список всех
     cursor.execute('select * from ClientList')
@@ -112,7 +119,7 @@ def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'neumnyj', '
         id_chat_t = all_client()[i][3]
         if id_chat == id_chat_t:
             send_message(id_chat, 'your_id_existed')
-            return 1
+            return False
     data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_chat) + '\', \'' + status + '\', \'' + message + '\''
     insert_data('ClientList', str(data))
     send_message(id_chat,'you_last')
