@@ -22,7 +22,7 @@ def start_defaullt():
     conn.commit()
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
-def send_message(id_chat):
+def send_message(id_chat, message):
     pass
 
 def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
@@ -30,6 +30,11 @@ def insert_data (table_name, data): # данные в виде insert_data("Clie
     cursor.execute(sql)
     conn.commit()
 
+def select_cl(id):
+    sql = "select * from ClientList where id == "+ str(id)
+    cursor.execute(sql)
+    row = cursor.fetchall()
+    return row
 
 def count ():
     cursor.execute('select count(*) from ClientList')
@@ -38,6 +43,8 @@ def count ():
     return count_l
 
 def drop_client (id):
+    id_chat = select_cl(id)[3]
+    send_message(id_chat, 'you_go_away')
     sql = 'delete from ClientList where id = ' + str(id)
     cursor.execute(sql)
     conn.commit()
@@ -50,6 +57,9 @@ def drop_client (id):
     #      conn.commit()
 
 def drop_all_cl ():
+    for i in range (0,count()-1):
+        id_chat = all_client()[i][3]
+        send_message(id_chat, 'go_home')
     sql = 'delete from ClientList'
     cursor.execute(sql)
     conn.commit()
@@ -80,17 +90,17 @@ def first_client ():
     row = cursor.fetchone()
     return row
 
-def im_in(current_id):
+def im_in(current_id):#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
     cursor.execute(sql)
     conn.commit()
     pass
 
-def im_out(current_id):
+def im_out(current_id):# вышел, запускайте следующего
     drop_client(current_id)
-    send_message(str(first_client ()[3]))
+    send_message(str(first_client ()[3]), 'ready')
 
-def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'hujumnyj', '150319', 'сколько ещё под дверью сидеть?')
+def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
     if count() > 0:
         id = str(all_client()[-1][0]+ 1)
