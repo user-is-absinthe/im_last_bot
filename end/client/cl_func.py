@@ -21,6 +21,9 @@ def start_defaullt():
                    """)
     conn.commit()
 
+# TODO: Оповещение уже в тг-части. Триггер для Плотвы
+def send_message(id_chat):
+    pass
 
 def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
@@ -83,6 +86,10 @@ def im_in(current_id):
     conn.commit()
     pass
 
+def im_out(current_id):
+    drop_client(current_id)
+    send_message(str(first_client ()[3]))
+
 def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'hujumnyj', '150319', 'сколько ещё под дверью сидеть?')
     status = 'outside'
     if count() > 0:
@@ -92,3 +99,4 @@ def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'hujumnyj', 
     data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_chat) + '\', \'' + status + '\', \'' + message + '\''
     insert_data('ClientList', str(data))
     pass
+
