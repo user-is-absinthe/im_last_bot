@@ -42,7 +42,7 @@ def count ():
     count_l = count_l[0][0]
     return count_l
 
-def drop_client (id):
+def drop_client (id):# удаление, можно как бан
     id_chat = select_cl(id)[3]
     send_message(id_chat, 'you_go_away')
     sql = 'delete from ClientList where id = ' + str(id)
@@ -56,7 +56,7 @@ def drop_client (id):
     #      cursor.execute(sql)
     #      conn.commit()
 
-def drop_all_cl ():
+def drop_all_cl (): # очистка очереди
     for i in range (0,count()-1):
         id_chat = all_client()[i][3]
         send_message(id_chat, 'go_home')
@@ -78,13 +78,13 @@ def prev_client (me_id):
     return row
 
 
-def all_client ():
+def all_client ():# список всех
     cursor.execute('select * from ClientList')
     rows = cursor.fetchall()
     return rows
 
 
-def first_client ():
+def first_client ():# первый
     sql = 'select * from ClientList' # where id = 1
     cursor.execute(sql)
     row = cursor.fetchone()
@@ -94,11 +94,13 @@ def im_in(current_id):#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
     cursor.execute(sql)
     conn.commit()
+    id_chat = select_cl(current_id)[3]
+    send_message(id_chat, 'you_come_in')
     pass
 
 def im_out(current_id):# вышел, запускайте следующего
     drop_client(current_id)
-    send_message(str(first_client ()[3]), 'ready')
+    send_message(str(first_client ()[3]), 'you_first')
 
 def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
@@ -106,7 +108,13 @@ def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'neumnyj', '
         id = str(all_client()[-1][0]+ 1)
     else:
         id = 1
+    for i in range (0,count()-1):
+        id_chat_t = all_client()[i][3]
+        if id_chat == id_chat_t:
+            send_message(id_chat, 'your_id_existed')
+            return 1
     data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_chat) + '\', \'' + status + '\', \'' + message + '\''
     insert_data('ClientList', str(data))
+    send_message(id_chat,'you_last')
     pass
 
