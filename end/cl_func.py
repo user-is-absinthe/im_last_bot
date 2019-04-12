@@ -11,8 +11,18 @@ def dostuff():
       msg = "Done"
 '''
 
-conn = sqlite3.connect("mydatabase.db") # или :memory: чтобы сохранить в RAM
-cursor = conn.cursor()
+def connector(sql, path = "mydatabase.db"):
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        conn.commit()
+        row = cursor.fetchone()
+    return row
+
+
+# conn = sqlite3.connect("mydatabase.db") # или :memory: чтобы сохранить в RAM
+# cursor = conn.cursor()
+
 # cursor.execute("""create table if not exists ClientList
 #                   (id int, nickname text, tgname text, id_tg_user text, message text)
 #                """)
@@ -23,15 +33,23 @@ cursor = conn.cursor()
 # Создание таблиц. Перед запуском измененной таблицы не забыть удалить старую базу
 def start_defaullt(path = "mydatabase.db"):
     #conn = sqlite3.connect("mydatabase.db")
-    conn = sqlite3.connect(path)
-    cursor = conn.cursor()
-    cursor.execute("""create table if not exists ClientList
+    # conn = sqlite3.connect(path)
+    # cursor = conn.cursor()
+    sql = """create table if not exists ClientList
                       (id int, nickname text, tgname text, id_tg_user text, status text, message text)
-                   """)
-    cursor.execute("""create table if not exists Banner
+                   """
+    connector(sql, path)
+    sql = """create table if not exists Banner
                       (firma text, text_b text, period int)
-                   """)
-    conn.commit()
+                   """
+    connector(sql, path)
+    # cursor.execute("""create table if not exists ClientList
+    #                   (id int, nickname text, tgname text, id_tg_user text, status text, message text)
+    #                """)
+    # cursor.execute("""create table if not exists Banner
+    #                   (firma text, text_b text, period int)
+    #                """)
+    # conn.commit()
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
 def send_message(id_tg_user, message):
@@ -39,33 +57,47 @@ def send_message(id_tg_user, message):
 
 def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
-    cursor.execute(sql)
-    conn.commit()
+    connector(sql)
+    # cursor.execute(sql)
+    # conn.commit()
 
 def select_cl(id):
     sql = "select * from ClientList where id == "+ str(id)
-    cursor.execute(sql)
-    row = cursor.fetchone()
+    # cursor.execute(sql)
+    row = connector(sql)#cursor.fetchone()
     return row
 
 def select_cl_id_tg(id_tg):
     sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
-    cursor.execute(sql)
-    row = cursor.fetchone()
+    # cursor.execute(sql)
+    # row = cursor.fetchone()
+    row = connector(sql)
     return row
 
-def count ():
-    cursor.execute('select count(*) from ClientList')
-    count_l = cursor.fetchall()
-    count_l = count_l[0][0]
+def count (path = "mydatabase.db"):
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from ClientList')
+        count_l = cursor.fetchall()
+        count_l = count_l[0][0]
     return count_l
+
+
+def all_client (path = "mydatabase.db"):# список всех
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('select * from ClientList')
+        rows = cursor.fetchall()
+    return rows
+
 
 def drop_client (id):# удаление, можно как бан
     id_tg_user = select_cl(id)[3]
     send_message(id_tg_user, 'you_go_away')
     sql = 'delete from ClientList where id = ' + str(id)
-    cursor.execute(sql)
-    conn.commit()
+    connector(sql)
+    # cursor.execute(sql)
+    # conn.commit()
     # count_l = int(count())
     # if  count_l == 0:
     #     return 0
@@ -77,43 +109,43 @@ def drop_client (id):# удаление, можно как бан
 def drop_client_tg_id (id_tg):
     send_message(id_tg, 'you_go_away')
     sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
-    cursor.execute(sql)
-    conn.commit()
-
+    # cursor.execute(sql)
+    # conn.commit()
+    connector(sql)
 
 def drop_all_cl (): # очистка очереди
     for i in range (0,count()-1):
         id_tg_user = all_client()[i][3]
         send_message(id_tg_user, 'go_home')
     sql = 'delete from ClientList'
-    cursor.execute(sql)
-    conn.commit()
+    connector(sql)
+    # cursor.execute(sql)
+    # conn.commit()
 
-def prev_client (me_id):
-    sql = "select * from ClientList where id == "+ str(me_id-1)
-    cursor.execute(sql)
-    row = cursor.fetchall()
-    if len(row) == 0 and count() > 0:
-        i = 2
-        while len(row) == 0:
-            sql = "select * from ClientList where id == " + str(me_id - i)
-            cursor.execute(sql)
-            row = cursor.fetchall()
-            i = i +1
+def prev_client (me_id, path = "mydatabase.db"):
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        sql = "select * from ClientList where id == "+ str(me_id-1)
+        cursor.execute(sql)
+        row = cursor.fetchall()
+        if len(row) == 0 and count() > 0:
+            i = 2
+            while len(row) == 0:
+                sql = "select * from ClientList where id == " + str(me_id - i)
+                cursor.execute(sql)
+                row = cursor.fetchall()
+                i = i +1
     return row
 
-def count_before(me_id):
-    sql = "select count(*) from ClientList where id < "+ str(me_id)
-    cursor.execute(sql)
-    count_l = cursor.fetchall()
-    count_l = count_l[0][0]
-    select_cl(me_id)[3]
+def count_before(me_id, path = "mydatabase.db"):
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        sql = "select count(*) from ClientList where id < "+ str(me_id)
+        cursor.execute(sql)
+        count_l = cursor.fetchall()
+        count_l = count_l[0][0]
+        select_cl(me_id)[3]
     return count_l
-
-def all_client ():# список всех
-    cursor.execute('select * from ClientList')
-    rows = cursor.fetchall()
-    return rows
 
 
 def first_client ():# первый

@@ -20,3 +20,4 @@ replace 'id_chat' to 'id_tg_user'
 def upd_message
 def drop_client_tg_id
 def select_cl_id_tg
+def connector
