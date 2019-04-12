@@ -80,7 +80,7 @@ def start_help(message):
 def get_text_message(message):
     logging.info('Catch message: {}.'.format(message))
     # print(message.text)
-    bot.send_message(message.from_user.id, 'Для регистрации введите команду /reg.')
+    bot.send_message(message.from_user.id, 'lost.')
 
     # if message.text == '/reg':
     #     bot.send_message(message.from_user.id, 'Представтесь.\nИмя увидит преподаватель, выбирайте мудро.')
@@ -88,6 +88,7 @@ def get_text_message(message):
 
 
 def get_name(message):
+    global PATH_TO_DB
     name = message.text
     # to_send = 'Вас зовут {0}, верно?\n' \
     #           'Если да, то нажмите /yes, иначе /no.'.format(name)
@@ -98,8 +99,10 @@ def get_name(message):
     user_id = message.from_user.id
     tg_name = message.chat.username
 
+    logging.info('Try add user {0} into DB.'.format(user_id))
     check_exist = to_db.registr(
-        id_tg_user=user_id, nickname=name, tgname=tg_name)
+        path=PATH_TO_DB, id_tg_user=user_id, nickname=name, tgname=tg_name
+    )
 
     keyboard = telebot.types.InlineKeyboardMarkup()
     key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='get_name_yes')
@@ -109,8 +112,10 @@ def get_name(message):
     # bot.send_message(message.from_user.id, to_send)
     # bot.register_next_step_handler(message, check_name)
     if check_exist:
+        logging.info('User {0} added into DB.'.format(user_id))
         bot.send_message(message.from_user.id, to_send, reply_markup=keyboard)
     else:
+        logging.info('User {0} exist into DB.'.format(user_id))
         bot.send_message(message.from_user.id, 'От вашего аккаунта в базе уже есть запись.')
 
 
@@ -153,9 +158,11 @@ def callback_worker(call):
         # TODO: delete all user info by id
         # to_base(user_id) -> True/False
     elif call.data == 'get_name_yes':
+        bot.register_next_step_handler(call.message, reason)
         pass
     elif call.data == 'get_name_no':
-        pass
+        # bot.send_message(call.message.chat.id, 'Введите имя.')
+        bot.register_next_step_handler(call.message, reason)
 
 
 bot.polling(none_stop=True, interval=0)

@@ -180,17 +180,17 @@ def upd_message(id_tg,msg, path):
 
 def registr (path, id_tg_user, nickname=None, tgname=None, message=None): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
-    if count() > 0:
-        id = str(all_client()[-1][0]+ 1)
+    if count(path) > 0:
+        id = str(all_client(path)[-1][0]+ 1)
     else:
         id = 1
-    for i in range (0,count()-1):
-        id_tg_user_t = all_client()[i][3]
+    for i in range (0,count(path)-1):
+        id_tg_user_t = all_client(path)[i][3]
         if id_tg_user == id_tg_user_t:
             send_message(id_tg_user, 'your_id_existed')
             return False
-    data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_tg_user) + '\', \'' + status + '\', \'' + message + '\''
-    insert_data('ClientList', str(data))
+    data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_tg_user) + '\', \'' + status + '\', \'' + str(message) + '\''
+    insert_data('ClientList', str(data), path)
     send_message(id_tg_user,'you_last')
     return True
 
