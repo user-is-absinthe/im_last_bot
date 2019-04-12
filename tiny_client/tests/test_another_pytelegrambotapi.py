@@ -3,10 +3,13 @@ import logging
 
 import telebot
 
+from end import cl_func as to_db
+
 
 PATH_TO_TOKEN = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/tiny_client/bot_token.txt'
-PATH_TO_LOG = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/tiny_client/tests/files/test.log'
+PATH_TO_LOG = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.log'
 OVERWRITE_LOG = False
+PATH_TO_DB = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.db'
 
 token_file = open(PATH_TO_TOKEN, 'r')
 token = token_file.read()
@@ -26,6 +29,8 @@ logging.basicConfig(
     ])
 
 logging.info('Program start.')
+
+to_db.start_defaullt()
 
 bot = telebot.TeleBot(token)
 
