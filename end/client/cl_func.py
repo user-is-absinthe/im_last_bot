@@ -3,18 +3,19 @@ import sqlite3
 conn = sqlite3.connect("mydatabase.db") # или :memory: чтобы сохранить в RAM
 cursor = conn.cursor()
 # cursor.execute("""create table if not exists ClientList
-#                   (id int, nickname text, tgname text, id_chat text, message text)
+#                   (id int, nickname text, tgname text, id_tg_user text, message text)
 #                """)
 # cursor.execute("""create table if not exists Banner
 #                   (firma text, text_b text, period int)
 #                """)
 
 # Создание таблиц. Перед запуском измененной таблицы не забыть удалить старую базу
-def start_defaullt():
-    conn = sqlite3.connect("mydatabase.db")
+def start_defaullt(path = "mydatabase.db"):
+    #conn = sqlite3.connect("mydatabase.db")
+    conn = sqlite3.connect(path)
     cursor = conn.cursor()
     cursor.execute("""create table if not exists ClientList
-                      (id int, nickname text, tgname text, id_chat text, status text, message text)
+                      (id int, nickname text, tgname text, id_tg_user text, status text, message text)
                    """)
     cursor.execute("""create table if not exists Banner
                       (firma text, text_b text, period int)
@@ -22,7 +23,7 @@ def start_defaullt():
     conn.commit()
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
-def send_message(id_chat, message):
+def send_message(id_tg_user, message):
     pass
 
 def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
@@ -36,6 +37,12 @@ def select_cl(id):
     row = cursor.fetchone()
     return row
 
+def select_cl_id_tg(id_tg):
+    sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    return row
+
 def count ():
     cursor.execute('select count(*) from ClientList')
     count_l = cursor.fetchall()
@@ -43,8 +50,8 @@ def count ():
     return count_l
 
 def drop_client (id):# удаление, можно как бан
-    id_chat = select_cl(id)[3]
-    send_message(id_chat, 'you_go_away')
+    id_tg_user = select_cl(id)[3]
+    send_message(id_tg_user, 'you_go_away')
     sql = 'delete from ClientList where id = ' + str(id)
     cursor.execute(sql)
     conn.commit()
@@ -56,10 +63,17 @@ def drop_client (id):# удаление, можно как бан
     #      cursor.execute(sql)
     #      conn.commit()
 
+def drop_client_tg_id (id_tg):
+    send_message(id_tg, 'you_go_away')
+    sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
+    cursor.execute(sql)
+    conn.commit()
+
+
 def drop_all_cl (): # очистка очереди
     for i in range (0,count()-1):
-        id_chat = all_client()[i][3]
-        send_message(id_chat, 'go_home')
+        id_tg_user = all_client()[i][3]
+        send_message(id_tg_user, 'go_home')
     sql = 'delete from ClientList'
     cursor.execute(sql)
     conn.commit()
@@ -101,27 +115,32 @@ def im_in(current_id):#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
     cursor.execute(sql)
     conn.commit()
-    id_chat = select_cl(current_id)[3]
-    send_message(id_chat, 'you_come_in')
+    id_tg_user = select_cl(current_id)[3]
+    send_message(id_tg_user, 'you_come_in')
     pass
 
 def im_out(current_id):# вышел, запускайте следующего
     drop_client(current_id)
     send_message(str(first_client ()[3]), 'you_first')
 
-def registr (nickname, tgname, id_chat, message): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
+def upd_message(id_tg,msg):
+    sql = 'update ClientList set message ='+ str(msg) +'where id_tg_user = ' + str(id_tg)
+    cursor.execute(sql)
+    conn.commit()
+
+def registr (id_tg_user, nickname=None, tgname=None, message=None): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
     if count() > 0:
         id = str(all_client()[-1][0]+ 1)
     else:
         id = 1
     for i in range (0,count()-1):
-        id_chat_t = all_client()[i][3]
-        if id_chat == id_chat_t:
-            send_message(id_chat, 'your_id_existed')
+        id_tg_user_t = all_client()[i][3]
+        if id_tg_user == id_tg_user_t:
+            send_message(id_tg_user, 'your_id_existed')
             return False
-    data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_chat) + '\', \'' + status + '\', \'' + message + '\''
+    data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_tg_user) + '\', \'' + status + '\', \'' + message + '\''
     insert_data('ClientList', str(data))
-    send_message(id_chat,'you_last')
+    send_message(id_tg_user,'you_last')
     pass
 

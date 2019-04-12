@@ -14,3 +14,9 @@ def drop_all_cl
 def drop_client
 def prev_client
 def im_out
+
+12.04.19
+replace 'id_chat' to 'id_tg_user'
+def upd_message
+def drop_client_tg_id
+def select_cl_id_tg
