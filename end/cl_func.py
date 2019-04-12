@@ -150,14 +150,16 @@ def count_before(me_id, path = "mydatabase.db"):
 
 def first_client ():# первый
     sql = 'select * from ClientList' # where id = 1
-    cursor.execute(sql)
-    row = cursor.fetchone()
+    row = connector(sql)
+    # cursor.execute(sql)
+    # row = cursor.fetchone()
     return row
 
 def im_in(current_id):#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
-    cursor.execute(sql)
-    conn.commit()
+    # cursor.execute(sql)
+    # conn.commit()
+    connector(sql)
     id_tg_user = select_cl(current_id)[3]
     send_message(id_tg_user, 'you_come_in')
     pass
@@ -168,8 +170,10 @@ def im_out(current_id):# вышел, запускайте следующего
 
 def upd_message(id_tg,msg):
     sql = 'update ClientList set message ='+ str(msg) +'where id_tg_user = ' + str(id_tg)
-    cursor.execute(sql)
-    conn.commit()
+    # cursor.execute(sql)
+    # conn.commit()
+    connector(sql)
+
 
 # TODO: update username (by id)
 
