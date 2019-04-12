@@ -30,7 +30,8 @@ logging.basicConfig(
 
 logging.info('Program start.')
 
-to_db.start_defaullt()
+to_db.start_defaullt(PATH_TO_DB)
+logging.info('Database connected.')
 
 bot = telebot.TeleBot(token)
 
@@ -88,11 +89,29 @@ def get_text_message(message):
 
 def get_name(message):
     name = message.text
-    to_send = 'Вас зовут {0}, верно?\n' \
-              'Если да, то нажмите /yes, иначе /no.'.format(name)
+    # to_send = 'Вас зовут {0}, верно?\n' \
+    #           'Если да, то нажмите /yes, иначе /no.'.format(name)
+    to_send = 'Вас зовут {0}, верно?'.format(name)
     # bot.reply_to(message, message=to_send)
-    bot.send_message(message.from_user.id, to_send)
-    bot.register_next_step_handler(message, check_name)
+
+    # TODO: add user id and name in base primary key id
+    user_id = message.from_user.id
+    tg_name = message.chat.username
+
+    check_exist = to_db.registr(
+        id_tg_user=user_id, nickname=name, tgname=tg_name)
+
+    keyboard = telebot.types.InlineKeyboardMarkup()
+    key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='get_name_yes')
+    key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='get_name_no')
+    keyboard.add(key_yes, key_no)
+
+    # bot.send_message(message.from_user.id, to_send)
+    # bot.register_next_step_handler(message, check_name)
+    if check_exist:
+        bot.send_message(message.from_user.id, to_send, reply_markup=keyboard)
+    else:
+        bot.send_message(message.from_user.id, 'От вашего аккаунта в базе уже есть запись.')
 
 
 def check_name(message):
@@ -114,32 +133,29 @@ def reason(message):
     bot.send_message(message.from_user.id, '#TEST\nотлично. но у нас нет связи с внутренней логикой, поэтому...')
 
     keyboard = telebot.types.InlineKeyboardMarkup()
-    key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='successful_register')
-    key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='register_failed')
+    key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='reason_successful_register')
+    key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='reason_register_failed')
     keyboard.add(key_yes, key_no)
 
     to_send = '''Проверьте введенные данные:\nВас зовут:\n{0}\nПричина посещения:\n{1}'''.format(name, user_reason)
     bot.send_message(message.from_user.id, to_send, reply_markup=keyboard)
 
 
-def to_get_in_line(message):
-    # TODO: update user info by id
-    # to_base(user_id, reason) -> True/False
-    bot.send_message()
-    pass
-
-
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
-    if call.data == "successful_register":
+    if call.data == "reason_successful_register":
         bot.send_message(call.message.chat.id, 'Добавляю в очередь.')
         # TODO: update user info by id
         # to_base(user_id, reason) -> True/False
         # to_base(call.message.from_user.id, reason???)
-    elif call.data == "register_failed":
+    elif call.data == "reason_register_failed":
         bot.send_message(call.message.chat.id, 'Тогда начнем сначала.')
         # TODO: delete all user info by id
         # to_base(user_id) -> True/False
+    elif call.data == 'get_name_yes':
+        pass
+    elif call.data == 'get_name_no':
+        pass
 
 
 bot.polling(none_stop=True, interval=0)

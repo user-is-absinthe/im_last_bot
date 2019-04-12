@@ -1,5 +1,16 @@
 import sqlite3
 
+
+''''
+def dostuff():
+    with sql.connect("database.db") as con:
+      name = "bob"
+      cur = con.cursor()
+      cur.execute("INSERT INTO students (name) VALUES (?)",(bob))
+      con.commit()
+      msg = "Done"
+'''
+
 conn = sqlite3.connect("mydatabase.db") # или :memory: чтобы сохранить в RAM
 cursor = conn.cursor()
 # cursor.execute("""create table if not exists ClientList
@@ -128,6 +139,8 @@ def upd_message(id_tg,msg):
     cursor.execute(sql)
     conn.commit()
 
+# TODO: update username (by id)
+
 def registr (id_tg_user, nickname=None, tgname=None, message=None): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
     if count() > 0:
@@ -142,5 +155,5 @@ def registr (id_tg_user, nickname=None, tgname=None, message=None): #registr('um
     data = '\'' + str(id) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + str(id_tg_user) + '\', \'' + status + '\', \'' + message + '\''
     insert_data('ClientList', str(data))
     send_message(id_tg_user,'you_last')
-    pass
+    return True
 
