@@ -1,6 +1,6 @@
 import sqlite3
 
-
+# TODO: Собственные потоки
 ''''
 def dostuff():
     with sql.connect("database.db") as con:
