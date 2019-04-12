@@ -56,23 +56,23 @@ def start_defaullt(path = "mydatabase.db"):
 def send_message(id_tg_user, message):
     pass
 
-def insert_data (table_name, data): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
+def insert_data (table_name, data, path): # данные в виде insert_data("ClientList", ''' '1', 'test', 'тест', 'f123', 'outside', 'hello AN' ''')
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
-    connector(sql)
+    connector(sql,path)
     # cursor.execute(sql)
     # conn.commit()
 
-def select_cl(id):
+def select_cl(id, path):
     sql = "select * from ClientList where id == "+ str(id)
     # cursor.execute(sql)
-    row = connector(sql)#cursor.fetchone()
+    row = connector(sql,path)#cursor.fetchone()
     return row
 
-def select_cl_id_tg(id_tg):
+def select_cl_id_tg(id_tg, path):
     sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
     # cursor.execute(sql)
     # row = cursor.fetchone()
-    row = connector(sql)
+    row = connector(sql,path)
     return row
 
 def count (path = "mydatabase.db"):
@@ -92,11 +92,11 @@ def all_client (path = "mydatabase.db"):# список всех
     return rows
 
 
-def drop_client (id):# удаление, можно как бан
+def drop_client (id, path):# удаление, можно как бан
     id_tg_user = select_cl(id)[3]
     send_message(id_tg_user, 'you_go_away')
     sql = 'delete from ClientList where id = ' + str(id)
-    connector(sql)
+    connector(sql,path)
     # cursor.execute(sql)
     # conn.commit()
     # count_l = int(count())
@@ -107,19 +107,19 @@ def drop_client (id):# удаление, можно как бан
     #      cursor.execute(sql)
     #      conn.commit()
 
-def drop_client_tg_id (id_tg):
+def drop_client_tg_id (id_tg, path):
     send_message(id_tg, 'you_go_away')
     sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
     # cursor.execute(sql)
     # conn.commit()
-    connector(sql)
+    connector(sql,path)
 
-def drop_all_cl (): # очистка очереди
+def drop_all_cl (path): # очистка очереди
     for i in range (0,count()-1):
         id_tg_user = all_client()[i][3]
         send_message(id_tg_user, 'go_home')
     sql = 'delete from ClientList'
-    connector(sql)
+    connector(sql,path)
     # cursor.execute(sql)
     # conn.commit()
 
@@ -149,36 +149,36 @@ def count_before(me_id, path = "mydatabase.db"):
     return count_l
 
 
-def first_client ():# первый
+def first_client (path):# первый
     sql = 'select * from ClientList' # where id = 1
-    row = connector(sql)
+    row = connector(sql,path)
     # cursor.execute(sql)
     # row = cursor.fetchone()
     return row
 
-def im_in(current_id):#зашел на сдвчу
+def im_in(current_id, path):#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id = ''' + str(current_id)
     # cursor.execute(sql)
     # conn.commit()
-    connector(sql)
+    connector(sql,path)
     id_tg_user = select_cl(current_id)[3]
     send_message(id_tg_user, 'you_come_in')
     pass
 
-def im_out(current_id):# вышел, запускайте следующего
+def im_out(current_id, path):# вышел, запускайте следующего
     drop_client(current_id)
     send_message(str(first_client ()[3]), 'you_first')
 
-def upd_message(id_tg,msg):
+def upd_message(id_tg,msg, path):
     sql = 'update ClientList set message ='+ str(msg) +'where id_tg_user = ' + str(id_tg)
     # cursor.execute(sql)
     # conn.commit()
-    connector(sql)
+    connector(sql,path)
 
 
 # TODO: update username (by id)
 
-def registr (id_tg_user, nickname=None, tgname=None, message=None): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
+def registr (path, id_tg_user, nickname=None, tgname=None, message=None): #registr('umnyj', 'neumnyj', '150319', 'там долго ещё?')
     status = 'outside'
     if count() > 0:
         id = str(all_client()[-1][0]+ 1)
