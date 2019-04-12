@@ -9,6 +9,7 @@ def dostuff():
       cur.execute("INSERT INTO students (name) VALUES (?)",(bob))
       con.commit()
       msg = "Done"
+      
 '''
 
 def connector(sql, path = "mydatabase.db"):
