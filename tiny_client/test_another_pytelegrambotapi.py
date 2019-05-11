@@ -10,6 +10,8 @@ PATH_TO_TOKEN = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/tiny_client/bot_
 PATH_TO_LOG = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.log'
 OVERWRITE_LOG = False
 PATH_TO_DB = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.db'
+OVERWRITE_BASE = True
+
 
 token_file = open(PATH_TO_TOKEN, 'r')
 token = token_file.read()
@@ -17,6 +19,12 @@ token = token_file.read()
 if OVERWRITE_LOG:
     try:
         os.remove(PATH_TO_LOG)
+    except FileNotFoundError:
+        pass
+
+if OVERWRITE_BASE:
+    try:
+        os.remove(PATH_TO_DB)
     except FileNotFoundError:
         pass
 
@@ -61,11 +69,7 @@ def start_help(message):
                   '\t/word - ввод секретного слова.\n'
         bot.send_message(message.from_user.id, to_send)
     elif message.text == '/reg':
-        to_send = 'Вы выбрали регистрацию.\nПожалуйста, укажите имя. ' \
-                  'Выбирайте мудро, так как вы будете видны под этим именем окружающим.'
-        bot.send_message(message.from_user.id, to_send)
-        # bot.reply_to(message, to_send)
-        bot.register_next_step_handler(message, get_name)
+        pre_get_name(message=message)
     elif message.text == '/count':
         # TODO: сколько человек до тебя в очереди, предыдущий
         pass
@@ -85,6 +89,14 @@ def get_text_message(message):
     # if message.text == '/reg':
     #     bot.send_message(message.from_user.id, 'Представтесь.\nИмя увидит преподаватель, выбирайте мудро.')
     #     bot.register_next_step_handler(message, get_name)
+
+
+def pre_get_name(message):
+    to_send = 'Вы выбрали регистрацию.\nПожалуйста, укажите имя. ' \
+              'Выбирайте мудро, так как вы будете видны под этим именем окружающим.'
+    bot.send_message(message.from_user.id, to_send)
+    print(message)
+    bot.register_next_step_handler(message, get_name)
 
 
 def get_name(message):
@@ -130,9 +142,18 @@ def check_name(message):
         bot.register_next_step_handler(message, get_name)
 
 
+def pre_reason(message):
+    text_message = 'Укажите причину для посещения.'
+    print(text_message)
+    bot.send_message(message.from_user.id, text_message)
+    bot.register_next_step_handler(message, reason)
+    pass
+
+
 def reason(message):
     # TODO: get user info from DB by user_tg_id
     # to_base(user_tg_id) -> name
+    print('u a here')
     name = 'A'
     user_reason = message.text
     bot.send_message(message.from_user.id, '#TEST\nотлично. но у нас нет связи с внутренней логикой, поэтому...')
@@ -157,8 +178,11 @@ def callback_worker(call):
         bot.send_message(call.message.chat.id, 'Тогда начнем сначала.')
         # TODO: delete all user info by id
         # to_base(user_id) -> True/False
+
+    # register:
     elif call.data == 'get_name_yes':
-        bot.register_next_step_handler(call.message, reason)
+        print(call.message)
+        bot.register_next_step_handler(call.message, pre_reason)
         pass
     elif call.data == 'get_name_no':
         # bot.send_message(call.message.chat.id, 'Введите имя.')
