@@ -141,7 +141,11 @@ def registr (id_tg_user, nickname='', tgname='', message='', path= PATH_DEFAULLT
     else:
         me_num = 1
     data = '\'' + str(id_tg_user) + '\', \'' + str(me_num) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
-    insert_data('ClientList', str(data), path)
+    try:
+        insert_data('ClientList', str(data), path)
+    except sqlite3.IntegrityError:
+        send_message(id_tg_user, 'registration failed')
+        return False
     send_message(id_tg_user,'you_last')
     return True
 
