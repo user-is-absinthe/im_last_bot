@@ -12,7 +12,7 @@ def connector(sql, path = "mydatabase.db"):
 
 # Создание таблиц. Перед запуском измененной таблицы не забыть удалить старую базу
 def start_defaullt(path = "mydatabase.db"):
-    os.remove(path)
+    # os.remove(path)
     sql = """create table if not exists ClientList
                       (id_tg_user integer PRIMARY KEY,
                       me_num int,
@@ -134,9 +134,9 @@ def upd_message(id_tg,msg, path):
 
 # TODO: update username (by id)
 
-def registr (id_tg_user, nickname=None, tgname=None, message=None, path= "mydatabase.db"):
+def registr (id_tg_user, nickname=None, tgname=None, message='', path= "mydatabase.db"):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
-    if count() > 0:
+    if count(path) > 0:
         me_num = str(all_client()[-1][0]+ 1)
     else:
         me_num = 1
