@@ -106,7 +106,7 @@ def get_name(message):
     name = message.text
     # to_send = 'Вас зовут {0}, верно?\n' \
     #           'Если да, то нажмите /yes, иначе /no.'.format(name)
-    # to_send = 'Вас зовут {0}, верно?'.format(name)
+    to_send = 'Вас зовут {0}, верно?'.format(name)
     # bot.reply_to(message, message=to_send)
 
     # TODO: add user id and name in base primary key id
@@ -163,15 +163,12 @@ def pre_reason(message):
 
 
 def reason(message):
-    global PATH_TO_DB
     # TODO: get user info from DB by user_tg_id
     # to_base(user_tg_id) -> name
     print('u a here')
-    user_id = message.from_user.id
-    # name = 'A'
-    name = to_db.select_cl_id_tg(user_id, PATH_TO_DB)
+    name = 'A'
     user_reason = message.text
-    # bot.send_message(message.from_user.id, '#TEST\nотлично. но у нас нет связи с внутренней логикой, поэтому...')
+    bot.send_message(message.from_user.id, '#TEST\nотлично. но у нас нет связи с внутренней логикой, поэтому...')
 
     keyboard = telebot.types.InlineKeyboardMarkup()
     key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='reason_successful_register')

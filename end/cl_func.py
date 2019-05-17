@@ -137,7 +137,7 @@ def upd_message(id_tg,msg, path):
 def registr (id_tg_user, nickname='', tgname='', message='', path= PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
     if count(path) > 0:
-        me_num = str(all_client()[-1][0]+ 1)
+        me_num = str(all_client(path=path)[-1][0]+ 1)
     else:
         me_num = 1
     data = '\'' + str(id_tg_user) + '\', \'' + str(me_num) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
