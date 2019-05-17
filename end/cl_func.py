@@ -1,7 +1,8 @@
 import sqlite3
-import os
 
-def connector(sql, path = "mydatabase.db"):
+PATH_DEFAULLT = 'mydatabase.db'
+
+def connector(sql, path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -11,8 +12,7 @@ def connector(sql, path = "mydatabase.db"):
 
 
 # Создание таблиц. Перед запуском измененной таблицы не забыть удалить старую базу
-def start_defaullt(path = "mydatabase.db"):
-    # os.remove(path)
+def start_defaullt(path = PATH_DEFAULLT):
     sql = """create table if not exists ClientList
                       (id_tg_user integer PRIMARY KEY,
                       me_num int,
@@ -52,7 +52,7 @@ def select_cl_id_tg(id_tg, path):
     row = connector(sql,path)
     return row
 
-def count (path = "mydatabase.db"):
+def count (path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         cursor.execute('select count(*) from ClientList')
@@ -61,7 +61,7 @@ def count (path = "mydatabase.db"):
     return count_l
 
 
-def all_client (path = "mydatabase.db"):# список всех
+def all_client (path = PATH_DEFAULLT):# список всех
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         cursor.execute('select * from ClientList')
@@ -74,7 +74,7 @@ def drop_client_tg_id (id_tg, path):
     sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
     connector(sql,path)
 
-def drop_all_cl (path= "mydatabase.db"): # очистка очереди
+def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
     for i in range (0,count()-1):
         id_tg_user = all_client()[i][0]
         send_message(id_tg_user, 'go_home')
@@ -82,7 +82,7 @@ def drop_all_cl (path= "mydatabase.db"): # очистка очереди
     connector(sql,path)
 
 
-def prev_client (me_num, path = "mydatabase.db"):
+def prev_client (me_num, path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         sql = "select * from ClientList where me_num == "+ str(me_num-1)
@@ -97,7 +97,7 @@ def prev_client (me_num, path = "mydatabase.db"):
                 i = i +1
     return row
 
-def count_before(me_num, path = "mydatabase.db"):
+def count_before(me_num, path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         sql = "select count(*) from ClientList where me_num < "+ str(me_num)
@@ -123,7 +123,7 @@ def im_in(id_tg_user, path):#зашел на сдвчу
     send_message(id_tg_user, 'you_come_in')
     pass
 
-def im_out(id_tg_user, path= "mydatabase.db"):# вышел, запускайте следующего
+def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте следующего
     drop_client_tg_id(id_tg_user)
     send_message(str(first_client ()[0]), 'you_first')
 
@@ -134,7 +134,7 @@ def upd_message(id_tg,msg, path):
 
 # TODO: update username (by id)
 
-def registr (id_tg_user, nickname=None, tgname=None, message='', path= "mydatabase.db"):
+def registr (id_tg_user, nickname='', tgname='', message='', path= PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
     if count(path) > 0:
         me_num = str(all_client()[-1][0]+ 1)
