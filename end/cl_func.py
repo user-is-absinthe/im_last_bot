@@ -1,5 +1,7 @@
 import sqlite3
 
+from tiny_client import test_another_pytelegrambotapi as tg_api
+
 PATH_DEFAULLT = 'mydatabase.db'
 
 def connector(sql, path = PATH_DEFAULLT):
@@ -33,6 +35,10 @@ def start_defaullt(path = PATH_DEFAULLT):
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
 def send_message(id_tg_user, message):
+    tg_api.random_message(
+        id_tg_user=id_tg_user,
+        text_message=message
+    )
     pass
 
 def insert_data (table_name, data, path = PATH_DEFAULLT):
@@ -128,7 +134,7 @@ def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте �
     send_message(str(first_client ()[0]), 'you_first')
 
 def upd_message(id_tg,msg, path = PATH_DEFAULLT):
-    sql = 'update ClientList set message ='+ str(msg) +'where id_tg_user = ' + str(id_tg)
+    sql = 'update ClientList set message = '+ str(msg) + ' where id_tg_user = ' + str(id_tg)
     connector(sql,path)
 
 

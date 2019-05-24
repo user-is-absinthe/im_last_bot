@@ -17,6 +17,10 @@ PATH_TO_LOG = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.log'
 OVERWRITE_LOG = False
 PATH_TO_DB = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.db'
 OVERWRITE_BASE = True
+SECRET_WORD = '123'
+
+
+SECRET_USERS = list()
 
 
 token_file = open(PATH_TO_TOKEN, 'r')
@@ -68,29 +72,54 @@ def start_help(message):
                   '\t/help - вывод меню помощи;\n' \
                   '\t/reg - регистрация нового пользователя;\n' \
                   '\t/count - узнать свое место в очереди и ближайших соседей;\n' \
-                  '\t/word - ввод секретного слова.\n'
+                  '\t/word - ввод секретного слова;\n' \
+                  '\t/reason - уточнить причину посещения.'
         bot.send_message(message.from_user.id, to_send)
     elif message.text == '/reg':
         pre_get_name(message=message)
     elif message.text == '/count':
         # TODO: сколько человек до тебя в очереди, предыдущий
+        print('amkd')
+        count_before_i = to_db.count_before(me_num=message.from_user.id, path=PATH_TO_DB)
+        prev_user = to_db.prev_client(me_num=message.from_user.id, path=PATH_TO_DB)
+        print(count_before_i)
+        print(prev_user)
+        to_send = 'Перед вами {0} человек в очереди.\nПредыдущий товарищ {1}.'
+        bot.send_message(message.from_user.id, to_send)
         pass
     elif message.text == '/word':
         to_send = 'Введите секретное слово.'
         bot.send_message(message.from_user.id, to_send)
-        # bot.register_next_step_handler(message, FUNC_NAME)
+        bot.register_next_step_handler(message, check_secret)
         # TODO: add secret word
+    elif message.text == '/reason':
+        send_message = 'Укажите причину для посещения.'
+        bot.send_message(message.from_user.id, send_message)
+        bot.register_next_step_handler(message, reason)
+
+        pass
 
 
 @bot.message_handler(content_types=['text'])
 def get_text_message(message):
     logging.info('Catch message: {}.'.format(message))
     # print(message.text)
-    bot.send_message(message.from_user.id, 'lost.')
+    bot.send_message(message.from_user.id, 'catch')
 
     # if message.text == '/reg':
     #     bot.send_message(message.from_user.id, 'Представтесь.\nИмя увидит преподаватель, выбирайте мудро.')
     #     bot.register_next_step_handler(message, get_name)
+
+
+def check_secret(message):
+    if message.text == SECRET_WORD:
+        send_text = 'Отлично, вам доступны новые команды. Воспользуйтесь командой /help.'
+        SECRET_USERS.append(message.from_user.id)
+        bot.send_message(message.from_user.id, send_text)
+    else:
+        send_text = 'Неправильный секрет.'
+        bot.send_message(message.from_user.id, send_text)
+    pass
 
 
 def pre_get_name(message):
@@ -104,10 +133,6 @@ def pre_get_name(message):
 def get_name(message):
     global PATH_TO_DB
     name = message.text
-    # to_send = 'Вас зовут {0}, верно?\n' \
-    #           'Если да, то нажмите /yes, иначе /no.'.format(name)
-    # to_send = 'Вас зовут {0}, верно?'.format(name)
-    # bot.reply_to(message, message=to_send)
 
     # TODO: add user id and name in base primary key id
     user_id = message.from_user.id
@@ -118,29 +143,21 @@ def get_name(message):
         path=PATH_TO_DB, id_tg_user=user_id, nickname=name, tgname=tg_name
     )
 
-    # keyboard = telebot.types.InlineKeyboardMarkup()
-    # key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='get_name_yes')
-    # key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='get_name_no')
-    # keyboard.add(key_yes, key_no)
-    #
-    # # bot.send_message(message.from_user.id, to_send)
-    # # bot.register_next_step_handler(message, check_name)
-
     if check_exist:
         logging.info('User {0} added into DB.'.format(user_id))
-        # bot.send_message(message.from_user.id, to_send, reply_markup=keyboard)
+
+        markup = types.ReplyKeyboardMarkup(row_width=2)
+        call_yes = types.KeyboardButton('Да')
+        call_no = types.KeyboardButton('Нет')
+        markup.add(call_yes, call_no)
+        bot.send_message(message.from_user.id, "Вас зовут {0}, верно?".format(name), reply_markup=markup)
+        bot.register_next_step_handler(message, pre_reason)
     else:
         logging.info('User {0} exist into DB.'.format(user_id))
-        bot.send_message(message.from_user.id, 'От вашего аккаунта в базе уже есть запись...')
-
-    markup = types.ReplyKeyboardMarkup(row_width=2)
-    call_yes = types.KeyboardButton('Да')
-    call_no = types.KeyboardButton('Нет')
-    markup.add(call_yes, call_no)
-    bot.send_message(message.from_user.id, "Вас зовут {0}, верно?".format(name), reply_markup=markup)
-    bot.register_next_step_handler(message, pre_reason)
-    # markup = types.ReplyKeyboardRemove(selective=False)
-    # bot.send_message(message.from_user.id, message, reply_markup=markup)
+        send_message = 'От вашего аккаунта в базе уже есть запись. 🧐\n' \
+                       'Укажите причину для посещения.'
+        bot.send_message(message.from_user.id, send_message)
+        bot.register_next_step_handler(message, reason)
 
 
 def pre_reason(message):
@@ -156,7 +173,7 @@ def pre_reason(message):
         bot.send_message(message.from_user.id, text_message, reply_markup=markup)
         bot.register_next_step_handler(message, get_name)
     else:
-        text_message = 'Я вас не понимаю. Воспользуйтесь справкой.'
+        text_message = 'Я вас не понимаю. Воспользуйтесь справкой.\n/help'
         print(text_message)
         bot.send_message(message.from_user.id, text_message, reply_markup=markup)
     pass
@@ -173,13 +190,44 @@ def reason(message):
     user_reason = message.text
     # bot.send_message(message.from_user.id, '#TEST\nотлично. но у нас нет связи с внутренней логикой, поэтому...')
 
-    keyboard = telebot.types.InlineKeyboardMarkup()
-    key_yes = telebot.types.InlineKeyboardButton(text='Да', callback_data='reason_successful_register')
-    key_no = telebot.types.InlineKeyboardButton(text='Нет', callback_data='reason_register_failed')
-    keyboard.add(key_yes, key_no)
+    markup = types.ReplyKeyboardMarkup(row_width=2)
+    call_yes = types.KeyboardButton('Да')
+    call_no = types.KeyboardButton('Нет')
+    markup.add(call_yes, call_no)
+    # bot.send_message(message.from_user.id, "Причина посещения:\n{0}\nВсе так?".format(name), reply_markup=markup)
+    # bot.register_next_step_handler(message, pre_reason)
 
-    to_send = '''Проверьте введенные данные:\nВас зовут:\n{0}\nПричина посещения:\n{1}'''.format(name, user_reason)
-    bot.send_message(message.from_user.id, to_send, reply_markup=keyboard)
+    print(message.from_user.id, user_reason)
+    to_db.upd_message(
+        id_tg=message.from_user.id,
+        msg=user_reason,
+        path=PATH_TO_DB
+    )
+
+    to_send = '''Проверьте введенные данные:\nВас зовут:\n{0}
+    \nПричина посещения:\n{1}'''.format(name, user_reason)
+    bot.send_message(message.from_user.id, to_send, reply_markup=markup)
+    bot.register_next_step_handler(message, pre_reason)
+
+
+def check_reason(message):
+    markup = types.ReplyKeyboardRemove(selective=False)
+    if message.text == 'Да':
+        text_message = 'Отлично, вы добавлены в базу.'
+        bot.send_message(message.from_user.id, text_message, reply_markup=markup)
+        pass
+    elif message.text == 'Нет':
+        text_message = 'Тогда начнем сначала.'
+        bot.send_message(message.from_user.id, text_message, reply_markup=markup)
+        bot.register_next_step_handler(message, pre_get_name)
+    else:
+        text_message = 'Я вас не понимаю. Воспользуйтесь справкой.\n/help'
+        bot.send_message(message.from_user.id, text_message, reply_markup=markup)
+    pass
+
+
+def random_message(id_tg_user, text_message):
+    bot.send_message(id_tg_user, text_message)
 
 
 @bot.callback_query_handler(func=lambda call: True)
