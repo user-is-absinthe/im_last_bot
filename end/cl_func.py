@@ -148,7 +148,7 @@ def upd_message(id_tg_msg, path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     sql = ''' UPDATE ClientList
               SET message = ? 
               WHERE id_tg_user = ?'''
-    with sqlite3.connect(path) as conn:
+    with sqlite3.connect(path, isolation_level=None) as conn:
         cursor = conn.cursor()
         cursor.execute(sql, id_tg_msg)
         conn.commit()
