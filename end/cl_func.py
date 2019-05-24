@@ -97,7 +97,7 @@ def prev_client (me_num, path = PATH_DEFAULLT):
                 i = i +1
     return row
 
-def count_before(me_num, path = PATH_DEFAULLT):
+def count_before_num(me_num, path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
         sql = "select count(*) from ClientList where me_num < "+ str(me_num)
@@ -107,6 +107,15 @@ def count_before(me_num, path = PATH_DEFAULLT):
 
     return count_l
 
+def count_before_id(id_tg_user, path = PATH_DEFAULLT):
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        sql = "select count(*) from ClientList id_tg_user = "+ str(id_tg_user)
+        cursor.execute(sql)
+        count_l = cursor.fetchall()
+        count_l = count_l[0][0]
+
+    return count_l
 
 def first_client (path = PATH_DEFAULLT):# первый
     sql = 'select * from ClientList' # where id = 1
