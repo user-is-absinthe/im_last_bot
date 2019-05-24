@@ -35,17 +35,17 @@ def start_defaullt(path = PATH_DEFAULLT):
 def send_message(id_tg_user, message):
     pass
 
-def insert_data (table_name, data, path):
+def insert_data (table_name, data, path = PATH_DEFAULLT):
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
     connector(sql,path)
 
-def select_cl(me_num, path):
+def select_cl(me_num, path = PATH_DEFAULLT):
     sql = "select * from ClientList where me_num == "+ str(me_num)
     # cursor.execute(sql)
     row = connector(sql,path)#cursor.fetchone()
     return row
 
-def select_cl_id_tg(id_tg, path):
+def select_cl_id_tg(id_tg, path = PATH_DEFAULLT):
     sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
     # cursor.execute(sql)
     # row = cursor.fetchone()
@@ -69,7 +69,7 @@ def all_client (path = PATH_DEFAULLT):# список всех
     return rows
 
 
-def drop_client_tg_id (id_tg, path):
+def drop_client_tg_id (id_tg, path = PATH_DEFAULLT):
     send_message(id_tg, 'you_go_away')
     sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
     connector(sql,path)
@@ -108,14 +108,14 @@ def count_before(me_num, path = PATH_DEFAULLT):
     return count_l
 
 
-def first_client (path):# первый
+def first_client (path = PATH_DEFAULLT):# первый
     sql = 'select * from ClientList' # where id = 1
     row = connector(sql,path)
     # cursor.execute(sql)
     # row = cursor.fetchone()
     return row
 
-def im_in(id_tg_user, path):#зашел на сдвчу
+def im_in(id_tg_user, path = PATH_DEFAULLT) :#зашел на сдвчу
     sql = '''update ClientList set status = 'inside' where id_tg_user = ''' + str(id_tg_user)
     # cursor.execute(sql)
     # conn.commit()
@@ -127,14 +127,14 @@ def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте �
     drop_client_tg_id(id_tg_user)
     send_message(str(first_client ()[0]), 'you_first')
 
-def upd_message(id_tg,msg, path):
+def upd_message(id_tg,msg, path = PATH_DEFAULLT):
     sql = 'update ClientList set message ='+ str(msg) +'where id_tg_user = ' + str(id_tg)
     connector(sql,path)
 
 
 # TODO: update username (by id)
 
-def registr (id_tg_user, nickname='', tgname='', message='', path= PATH_DEFAULLT):
+def registr (id_tg_user, nickname='', tgname='', message='', path = PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
     if count(path) > 0:
         me_num = str(all_client()[-1][0]+ 1)
