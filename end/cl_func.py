@@ -1,6 +1,6 @@
 import sqlite3
 
-from tiny_client import test_another_pytelegrambotapi as tg_api
+#from tiny_client import test_another_pytelegrambotapi as tg_api
 
 PATH_DEFAULLT = 'mydatabase.db'
 
@@ -17,7 +17,6 @@ def connector(sql, path = PATH_DEFAULLT):
 def start_defaullt(path = PATH_DEFAULLT):
     sql = """create table if not exists ClientList
                       (id_tg_user integer PRIMARY KEY,
-                      me_num int,
                       nickname text,
                       tgname text,
                       status text,
@@ -35,10 +34,10 @@ def start_defaullt(path = PATH_DEFAULLT):
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
 def send_message(id_tg_user, message):
-    tg_api.random_message(
-        id_tg_user=id_tg_user,
-        text_message=message
-    )
+    # tg_api.random_message(
+    #     id_tg_user=id_tg_user,
+    #     text_message=message
+    # )
     pass
 
 def insert_data (table_name, data, path = PATH_DEFAULLT):
@@ -87,43 +86,35 @@ def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
     sql = 'delete from ClientList'
     connector(sql,path)
 
-
-def prev_client (me_num, path = PATH_DEFAULLT):
-    with sqlite3.connect(path) as conn:
-        cursor = conn.cursor()
-        sql = "select * from ClientList where me_num == "+ str(me_num-1)
-        cursor.execute(sql)
-        row = cursor.fetchall()
-        if len(row)  == 0:
-            return False
-        if len(row) != 0 and count() > 0:
-            i = 2
-            while len(row) == 0:
-                sql = "select * from ClientList where me_num == " + str(me_num - i)
-                cursor.execute(sql)
-                row = cursor.fetchall()
-                i = i +1
-    return row
-
-# def count_before_num(me_num, path = PATH_DEFAULLT):
+# TODO: разобраться с me_num
+# def prev_client (id_tg, path = PATH_DEFAULLT):
 #     with sqlite3.connect(path) as conn:
 #         cursor = conn.cursor()
-#         sql = "select count(*) from ClientList where me_num < "+ str(me_num)
+#         sql = "select * from ClientList where me_num == "+ str(me_num-1)
+#         cursor.execute(sql)
+#         row = cursor.fetchall()
+#         if len(row)  == 0:
+#             return False
+#         if len(row) != 0 and count() > 0:
+#             i = 2
+#             while len(row) == 0:
+#                 sql = "select * from ClientList where me_num == " + str(me_num - i)
+#                 cursor.execute(sql)
+#                 row = cursor.fetchall()
+#                 i = i +1
+#     return row
+
+# TODO: разобраться с me_num
+#
+# def count_before_id(id_tg_user, path = PATH_DEFAULLT):
+#     with sqlite3.connect(path) as conn:
+#         cursor = conn.cursor()
+#         sql = "select count(*) from ClientList id_tg_user = "+ str(id_tg_user)
 #         cursor.execute(sql)
 #         count_l = cursor.fetchall()
 #         count_l = count_l[0][0]
 #
 #     return count_l
-
-def count_before_id(id_tg_user, path = PATH_DEFAULLT):
-    with sqlite3.connect(path) as conn:
-        cursor = conn.cursor()
-        sql = "select count(*) from ClientList id_tg_user = "+ str(id_tg_user)
-        cursor.execute(sql)
-        count_l = cursor.fetchall()
-        count_l = count_l[0][0]
-
-    return count_l
 
 def first_client (path = PATH_DEFAULLT):# первый
     sql = 'select * from ClientList' # where id = 1
@@ -148,10 +139,12 @@ def upd_message(id_tg_msg, path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     sql = ''' UPDATE ClientList
               SET message = ? 
               WHERE id_tg_user = ?'''
-    with sqlite3.connect(path, isolation_level=None) as conn:
-        cursor = conn.cursor()
-        cursor.execute(sql, id_tg_msg)
-        conn.commit()
+    conn = sqlite3.connect(path, isolation_level=None)
+    #with sqlite3.connect(path, isolation_level=None) as conn:
+    cursor = conn.cursor()
+    cursor.execute(sql, id_tg_msg)
+    conn.commit()
+    conn.close()
     return True
 
 
@@ -159,11 +152,11 @@ def upd_message(id_tg_msg, path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
 
 def registr (id_tg_user, nickname='', tgname='', message='', path = PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
-    if count(path) > 0:
-        me_num = str(all_client(path=path)[-1][0]+ 1)
-    else:
-        me_num = 1
-    data = '\'' + str(id_tg_user) + '\', \'' + str(me_num) + '\', \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
+    # if count(path) > 0:
+    #     me_num = str(all_client(path=path)[-1][0]+ 1)
+    # else:
+    #     me_num = 1
+    data = '\'' + str(id_tg_user) + '\', \''  + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
     try:
         insert_data('ClientList', str(data), path)
     except sqlite3.IntegrityError:
