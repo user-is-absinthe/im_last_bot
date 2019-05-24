@@ -88,7 +88,9 @@ def prev_client (me_num, path = PATH_DEFAULLT):
         sql = "select * from ClientList where me_num == "+ str(me_num-1)
         cursor.execute(sql)
         row = cursor.fetchall()
-        if len(row) == 0 and count() > 0:
+        if len(row)  == 0:
+            return False
+        if len(row) != 0 and count() > 0:
             i = 2
             while len(row) == 0:
                 sql = "select * from ClientList where me_num == " + str(me_num - i)
