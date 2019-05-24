@@ -32,12 +32,6 @@ if OVERWRITE_LOG:
     except FileNotFoundError:
         pass
 
-if OVERWRITE_BASE:
-    try:
-        os.remove(PATH_TO_DB)
-    except FileNotFoundError:
-        pass
-
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(threadName)s] [%(funcName)s] [%(levelname)s]  %(message)s",
@@ -46,11 +40,16 @@ logging.basicConfig(
         logging.StreamHandler()
     ])
 
-logging.info('Program start.')
+if OVERWRITE_BASE:
+    try:
+        os.remove(PATH_TO_DB)
+        to_db.start_defaullt(PATH_TO_DB)
+    except FileNotFoundError:
+        pass
 
-
-to_db.start_defaullt(PATH_TO_DB)
 logging.info('Database connected.')
+
+logging.info('Program start.')
 
 bot = telebot.TeleBot(token)
 
@@ -68,19 +67,33 @@ def start_help(message):
         # bot.send_message(message.from_user.id, 'first message')
         bot.reply_to(message, to_send)
     elif message.text == '/help':
-        to_send = 'Доступные команды:\n' \
-                  '\t/help - вывод меню помощи;\n' \
-                  '\t/reg - регистрация нового пользователя;\n' \
-                  '\t/count - узнать свое место в очереди и ближайших соседей;\n' \
-                  '\t/word - ввод секретного слова;\n' \
-                  '\t/reason - уточнить причину посещения.'
+        to_send = 'Обычные команды:\n' \
+                  '\t/help - вывод меню помощи\n' \
+                  '\t/reg - регистрация нового пользователя\n' \
+                  '\t/count - узнать свое место в очереди и ближайших соседей\n' \
+                  '\t/word - ввод секретного слова\n' \
+                  '\t/reason - уточнить причину посещения\n' \
+                  '\t/game - поиграть в игрушку\n'
+        # bot.send_message(message.from_user.id, to_send)
+        if message.from_user.id in SECRET_USERS:
+            special = '\nСпециальные команды:\n' \
+                      '\t/get_all - показать всех пользователей;\n' \
+                      '\t/go_away - распустить очередь:\n' \
+                      '\t/new_secret - установить новое секретное слово\n' \
+                      '\t/next_user - вызвать следующего по очереди пользователя\n' \
+                      '\t/stop - приостновить прием\n' \
+                      '\t/get_user - вызвать конкретного пользователя\n' \
+                      '\t/send_message - отправить сообщение конкретному пользователю\n' \
+                      '\t/send_message_all - отправить сообщение всем\n'
+            to_send += special
         bot.send_message(message.from_user.id, to_send)
+
     elif message.text == '/reg':
         pre_get_name(message=message)
     elif message.text == '/count':
         # TODO: сколько человек до тебя в очереди, предыдущий
         print('amkd')
-        count_before_i = to_db.count_before(me_num=message.from_user.id, path=PATH_TO_DB)
+        count_before_i = to_db.count_before_id(id_tg_user=message.from_user.id, path=PATH_TO_DB)
         prev_user = to_db.prev_client(me_num=message.from_user.id, path=PATH_TO_DB)
         print(count_before_i)
         print(prev_user)
@@ -96,6 +109,23 @@ def start_help(message):
         send_message = 'Укажите причину для посещения.'
         bot.send_message(message.from_user.id, send_message)
         bot.register_next_step_handler(message, reason)
+
+    # TODO: fix special func
+    elif message.text == '/get_all' and message.from_user.id in SECRET_USERS:
+        print('awdjbl')
+        pass
+    elif message.text == '/go_away' and message.from_user.id in SECRET_USERS:
+        pass
+    elif message.text == '/new_secret' and message.from_user.id in SECRET_USERS:
+        pass
+    elif message.text == '/next_user' and message.from_user.id in SECRET_USERS:
+        pass
+    elif message.text == '/stop' and message.from_user.id in SECRET_USERS:
+        pass
+    elif message.text == '/get_user' and message.from_user.id in SECRET_USERS:
+        pass
+    elif message.text == '/send_message' and message.from_user.id in SECRET_USERS:
+        pass
 
         pass
 

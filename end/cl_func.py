@@ -1,6 +1,5 @@
 import sqlite3
 
-from tiny_client import test_another_pytelegrambotapi as tg_api
 
 PATH_DEFAULLT = 'mydatabase.db'
 
@@ -35,10 +34,10 @@ def start_defaullt(path = PATH_DEFAULLT):
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
 def send_message(id_tg_user, message):
-    tg_api.random_message(
-        id_tg_user=id_tg_user,
-        text_message=message
-    )
+    # tg_api.random_message(
+    #     id_tg_user=id_tg_user,
+    #     text_message=message
+    # )
     pass
 
 def insert_data (table_name, data, path = PATH_DEFAULLT):
