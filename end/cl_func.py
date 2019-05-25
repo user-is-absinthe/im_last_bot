@@ -82,35 +82,27 @@ def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
     connector(sql,path)
     return True
 
-# TODO: разобраться с me_num
-# def prev_client (id_tg, path = PATH_DEFAULLT):
-#     with sqlite3.connect(path) as conn:
-#         cursor = conn.cursor()
-#         sql = "select * from ClientList where me_num == "+ str(me_num-1)
-#         cursor.execute(sql)
-#         row = cursor.fetchall()
-#         if len(row)  == 0:
-#             return False
-#         if len(row) != 0 and count() > 0:
-#             i = 2
-#             while len(row) == 0:
-#                 sql = "select * from ClientList where me_num == " + str(me_num - i)
-#                 cursor.execute(sql)
-#                 row = cursor.fetchall()
-#                 i = i +1
-#     return row
 
-# TODO: разобраться с me_num
-#
-# def count_before_id(id_tg_user, path = PATH_DEFAULLT):
-#     with sqlite3.connect(path) as conn:
-#         cursor = conn.cursor()
-#         sql = "select count(*) from ClientList id_tg_user = "+ str(id_tg_user)
-#         cursor.execute(sql)
-#         count_l = cursor.fetchall()
-#         count_l = count_l[0][0]
-#
-#     return count_l
+def prev_client (id_tg_user, path = PATH_DEFAULLT):
+    sql = "select num_id from ClientList where id_tg_user = " + str(id_tg_user)
+    num_id = int(connector(sql, path)[0])
+    sql = "select * from ClientList where num_id = "+ str(num_id-1)
+    row = connector(sql, path)
+    if len(row)  == 0:
+        return False
+    else:
+        return row
+
+
+def count_before(id_tg_user, path = PATH_DEFAULLT):
+    sql = "select num_id from ClientList where id_tg_user = "+ str(id_tg_user)
+    num_id = connector(sql, path)
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('select count(*) from ClientList where num_id < ?', num_id)
+        count_l = cursor.fetchall()
+        count_l = count_l[0][0]
+    return count_l
 
 def first_client (path = PATH_DEFAULLT):# первый
     sql = 'select * from ClientList' # where id = 1
