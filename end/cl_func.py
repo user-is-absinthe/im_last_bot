@@ -117,11 +117,17 @@ def im_in(id_tg_user, path = PATH_DEFAULLT) :#зашел на сдвчу
     # conn.commit()
     connector(sql,path)
     send_message(id_tg_user, 'you_come_in')
-    pass
+    return True
 
 def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте следующего
-    drop_client_tg_id(id_tg_user)
-    send_message(str(first_client ()[0]), 'you_first')
+    sql = 'select status from ClientList WHERE id_tg_user =' + str(id_tg_user)
+    status = connector(sql, path)[0]
+    if status == 'inside':
+        drop_client_tg_id(id_tg_user)
+        send_message(str(first_client ()[0]), 'you_first')
+        return True
+    else:
+        return False
 
 def upd_message(id_tg, msg,  path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     sql = ''' UPDATE ClientList
