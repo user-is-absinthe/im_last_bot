@@ -74,7 +74,6 @@ def start_help(message):
                   '\t/word - ввод секретного слова\n' \
                   '\t/reason - уточнить причину посещения\n' \
                   '\t/game - поиграть в игрушку\n'
-        # bot.send_message(message.from_user.id, to_send)
         if message.from_user.id in SECRET_USERS:
             special = '\nСпециальные команды:\n' \
                       '\t/get_all - показать всех пользователей;\n' \
