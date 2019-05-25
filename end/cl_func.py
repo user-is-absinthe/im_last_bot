@@ -84,14 +84,13 @@ def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
 
 
 def prev_client (id_tg_user, path = PATH_DEFAULLT):
+    if count(path) ==1:
+        return False
     sql = "select num_id from ClientList where id_tg_user = " + str(id_tg_user)
     num_id = int(connector(sql, path)[0])
-    sql = "select * from ClientList where num_id = "+ str(num_id-1)
+    sql = "select * from ClientList where num_id < "+ num_id + " ORDER BY num_id DESC"
     row = connector(sql, path)
-    if len(row)  == 0:
-        return False
-    else:
-        return row
+    return row
 
 
 def count_before(id_tg_user, path = PATH_DEFAULLT):
