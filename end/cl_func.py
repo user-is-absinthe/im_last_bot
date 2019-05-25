@@ -24,13 +24,13 @@ def start_defaullt(path = PATH_DEFAULLT):
                       message text);
                    """
     connector(sql, path)
-    sql = """create table if not exists Banner
-                      (id integer PRIMARY KEY,
-                      firma text,
-                      text_banner text,
-                      period int);
-                   """
-    connector(sql, path)
+    # sql = """create table if not exists Banner
+    #                   (id integer PRIMARY KEY,
+    #                   firma text,
+    #                   text_banner text,
+    #                   period int);
+    #                """
+    # connector(sql, path)
     return True
 
 # TODO: Оповещение уже в тг-части. Триггер для Плотвы
@@ -78,8 +78,10 @@ def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
     for i in range (0,count()-1):
         id_tg_user = all_client()[i][0]
         send_message(id_tg_user, 'go_home')
-    sql = 'delete from ClientList'
+    #sql = 'delete from ClientList'
+    sql = 'DROP TABLE ClientList'
     connector(sql,path)
+    start_defaullt(path)
     return True
 
 
