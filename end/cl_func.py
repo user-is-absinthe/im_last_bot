@@ -44,7 +44,7 @@ def send_message(id_tg_user, message):
 def insert_data (table_name, data, path = PATH_DEFAULLT):
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
     connector(sql,path)
-
+    return True
 
 def select_cl_id_tg(id_tg, path = PATH_DEFAULLT):
     sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
@@ -70,8 +70,9 @@ def all_client (path = PATH_DEFAULLT):# список всех
 
 def drop_client_tg_id (id_tg, path = PATH_DEFAULLT):
     send_message(id_tg, 'you_go_away')
-    sql = 'delete from ClientList where id_tg_str = ' + str(id_tg)
+    sql = 'delete from ClientList where id_tg_user = ' + str(id_tg)
     connector(sql,path)
+    return True
 
 def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
     for i in range (0,count()-1):
@@ -79,6 +80,7 @@ def drop_all_cl (path= PATH_DEFAULLT): # очистка очереди
         send_message(id_tg_user, 'go_home')
     sql = 'delete from ClientList'
     connector(sql,path)
+    return True
 
 # TODO: разобраться с me_num
 # def prev_client (id_tg, path = PATH_DEFAULLT):
@@ -141,12 +143,13 @@ def upd_message(id_tg, msg,  path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     return True
 
 
-# TODO: update username (by id)
-
-def registr (id_tg_user, num_id ='', nickname='', tgname='', message='', path = PATH_DEFAULLT):
+def registr (id_tg_user, nickname='', tgname='', message='', path = PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
-    num_id = first_client(path)[1] + count(path)+1
-    data = '\'' + str(id_tg_user) + '\',  \'' + num_id + '\',  \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
+    if first_client(path) is None:
+        num_id = 1
+    else:
+        num_id = first_client(path)[1] + count(path)
+    data = '\'' + str(id_tg_user) + '\',  \'' + str(num_id) + '\',  \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
     try:
         insert_data('ClientList', str(data), path)
     except sqlite3.IntegrityError:
