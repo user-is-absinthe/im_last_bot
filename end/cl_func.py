@@ -1,5 +1,6 @@
 import sqlite3
 
+#from tiny_client import test_another_pytelegrambotapi as tg_api
 
 PATH_DEFAULLT = 'mydatabase.db'
 
@@ -16,7 +17,7 @@ def connector(sql, path = PATH_DEFAULLT):
 def start_defaullt(path = PATH_DEFAULLT):
     sql = """create table if not exists ClientList
                       (id_tg_user integer PRIMARY KEY,
-                      me_num int,
+                      num_id integer,
                       nickname text,
                       tgname text,
                       status text,
@@ -44,16 +45,9 @@ def insert_data (table_name, data, path = PATH_DEFAULLT):
     sql = 'insert into ' + str(table_name) + ' values ( ' + str(data) + ' )'
     connector(sql,path)
 
-# def select_cl(me_num, path = PATH_DEFAULLT):
-#     sql = "select * from ClientList where me_num == "+ str(me_num)
-#     # cursor.execute(sql)
-#     row = connector(sql,path)#cursor.fetchone()
-#     return row
 
 def select_cl_id_tg(id_tg, path = PATH_DEFAULLT):
     sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
-    # cursor.execute(sql)
-    # row = cursor.fetchone()
     row = connector(sql,path)
     return row
 
@@ -135,28 +129,24 @@ def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте �
     drop_client_tg_id(id_tg_user)
     send_message(str(first_client ()[0]), 'you_first')
 
-def upd_message(id_tg_msg, path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
+def upd_message(id_tg, msg,  path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     sql = ''' UPDATE ClientList
               SET message = ? 
               WHERE id_tg_user = ?'''
-    conn = sqlite3.connect(path, isolation_level=None)
-    #with sqlite3.connect(path, isolation_level=None) as conn:
-    cursor = conn.cursor()
-    cursor.execute(sql, id_tg_msg)
-    conn.commit()
-    conn.close()
+    id_tg_msg = (msg, id_tg)
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute(sql, id_tg_msg)
+        conn.commit()
     return True
 
 
 # TODO: update username (by id)
 
-def registr (id_tg_user, nickname='', tgname='', message='', path = PATH_DEFAULLT):
+def registr (id_tg_user, num_id ='', nickname='', tgname='', message='', path = PATH_DEFAULLT):
     status = 'outside' #registr( '150319', 'nickname', 'tgnickname', 'там долго ещё?')
-    # if count(path) > 0:
-    #     me_num = str(all_client(path=path)[-1][0]+ 1)
-    # else:
-    #     me_num = 1
-    data = '\'' + str(id_tg_user) + '\', \''  + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
+    num_id = first_client(path)[1] + count(path)+1
+    data = '\'' + str(id_tg_user) + '\',  \'' + num_id + '\',  \'' + nickname + '\', \'' + tgname + '\', \'' + status + '\', \'' + message + '\''
     try:
         insert_data('ClientList', str(data), path)
     except sqlite3.IntegrityError:
