@@ -88,7 +88,7 @@ def prev_client (id_tg_user, path = PATH_DEFAULLT):
         return False
     sql = "select num_id from ClientList where id_tg_user = " + str(id_tg_user)
     num_id = int(connector(sql, path)[0])
-    sql = "select * from ClientList where num_id < "+ num_id + " ORDER BY num_id DESC"
+    sql = "select * from ClientList where num_id < "+ str(num_id) + " ORDER BY num_id DESC"
     row = connector(sql, path)
     return row
 
