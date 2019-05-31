@@ -9,6 +9,7 @@ from end import cl_func as to_db
 """
 documentation:
 https://pypi.org/project/pyTelegramBotAPI/
+https://habr.com/ru/post/442800/
 """
 
 
@@ -109,7 +110,8 @@ def start_help(message):
         bot.send_message(message.from_user.id, send_message)
         bot.register_next_step_handler(message, reason)
     elif message.text == '/game':
-        send_message = 'Если вы видите это сообщение, а не игру, значит кое-кто кое-что так и не сделал.'
+        # send_message = 'Если вы видите это сообщение, а не игру, значит кое-кто кое-что так и не сделал.'
+        send_message = 'Вы можете сыграть в игру перейдя по ссылке:\nhttps://biggest-brother.github.io/'
         bot.send_message(message.from_user.id, send_message)
 
     elif message.text == '/get_all' and message.from_user.id in SECRET_USERS:
