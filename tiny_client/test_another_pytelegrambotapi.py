@@ -134,7 +134,7 @@ def start_help(message):
         all_users = to_db.all_client(PATH_TO_DB)
         regular_row = '{3}. {0} пользователь (@{1}) хочет попасть к вам по причине {2}.\n'
         all_rows = 'Список всех пользователей в порядке очередности:\n'
-        for index, user in enumerate(all_users):
+        for index, user in enumerate(reversed(all_users)):
             all_rows += regular_row.format(
                 user[2], user[3], user[5], index + 1
             )
