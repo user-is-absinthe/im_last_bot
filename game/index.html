@@ -1,17 +1,28 @@
+<!-- Game example taken from w3schools (https://www.w3schools.com/graphics/game_intro.asp) -->
+<!-- this.canvas.width = 480; -->
+<!-- this.canvas.height = 270; -->
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>
-canvas {
-    border:1px solid #d3d3d3;
-    background-color: #f1f1f1;
-}
-</style>
-</head>
-<body onload="startGame()">
-<script>
-
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+    body {
+      font-family: 'Courier ';
+      text-align: center;
+    }
+    canvas {
+      border:1px solid #d3d3d3;
+      background-color: #f1f1f1;
+    }
+    </style>
+  </head>
+  <body onload="startGame()">
+    <!-- <p><button onclick="accelerate(0.05)" onmouseup="accelerate(0.05)">ACCELERATE</button></p> -->
+    <!-- <p><button onmousedown="accelerate(-0.2)">ACCELERATE</button></p> -->
+    <p><button style="height:200px;width:200px" ontouchstart="accelerate(-0.2)" ontouchend="accelerate(0.05)">PRESS</button></p>
+    <p>Use the ACCELERATE button to stay in the air</p>
+    <p>How long can you stay alive?</p>
+    <script>
 var myGamePiece;
 var myObstacles = [];
 var myScore;
@@ -26,7 +37,7 @@ function startGame() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 480;
+        this.canvas.width = 300;
         this.canvas.height = 270;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
@@ -44,7 +55,7 @@ function component(width, height, color, x, y, type) {
     this.width = width;
     this.height = height;
     this.speedX = 0;
-    this.speedY = 0;    
+    this.speedY = 0;
     this.x = x;
     this.y = y;
     this.gravity = 0;
@@ -95,7 +106,7 @@ function updateGameArea() {
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             return;
-        } 
+        }
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
@@ -128,10 +139,6 @@ function everyinterval(n) {
 function accelerate(n) {
     myGamePiece.gravity = n;
 }
-</script>
-<br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
-<p>Use the ACCELERATE button to stay in the air</p>
-<p>How long can you stay alive?</p>
-</body>
+    </script>
+  </body>
 </html>
