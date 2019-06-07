@@ -2,7 +2,7 @@ import sqlite3
 
 #from tiny_client import test_another_pytelegrambotapi as tg_api
 
-PATH_DEFAULLT = 'mydatabase.db'
+PATH_DEFAULLT = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.db'
 
 def connector(sql, path = PATH_DEFAULLT):
     with sqlite3.connect(path) as conn:
@@ -100,7 +100,10 @@ def count_before(id_tg_user, path = PATH_DEFAULLT):
     num_id = connector(sql, path)
     with sqlite3.connect(path) as conn:
         cursor = conn.cursor()
-        cursor.execute('select count(*) from ClientList where num_id < ?', num_id)
+        try:
+            cursor.execute('select count(*) from ClientList where num_id < ?', num_id)
+        except ValueError:
+            return False
         count_l = cursor.fetchall()
         count_l = count_l[0][0]
     return count_l
