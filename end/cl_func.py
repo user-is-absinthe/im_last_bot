@@ -47,7 +47,7 @@ def insert_data (table_name, data, path = PATH_DEFAULLT):
     return True
 
 def select_cl_id_tg(id_tg, path = PATH_DEFAULLT):
-    sql = "select * from ClientList where id_tg_user == "+ str(id_tg)
+    sql = "select * from ClientList where id_tg_user = "+ str(id_tg)
     row = connector(sql,path)
     return row
 
@@ -113,6 +113,15 @@ def first_client (path = PATH_DEFAULLT):# первый
     return row
 
 def im_in(id_tg_user, path = PATH_DEFAULLT) :#зашел на сдвчу
+    sql = '''select  id_tg_user from ClientList where status = "inside"'''
+    with sqlite3.connect(path) as conn:
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        in_list = cursor.fetchall()
+    if in_list is not None:
+        for id_u in in_list:
+            drop_client_tg_id(id_u[0],path)
+
     sql = '''update ClientList set status = 'inside' where id_tg_user = ''' + str(id_tg_user)
     # cursor.execute(sql)
     # conn.commit()
@@ -120,15 +129,15 @@ def im_in(id_tg_user, path = PATH_DEFAULLT) :#зашел на сдвчу
     send_message(id_tg_user, 'you_come_in')
     return True
 
-def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте следующего
-    sql = 'select status from ClientList WHERE id_tg_user =' + str(id_tg_user)
-    status = connector(sql, path)[0]
-    if status == 'inside':
-        drop_client_tg_id(id_tg_user)
-        send_message(str(first_client ()[0]), 'you_first')
-        return True
-    else:
-        return False
+# def im_out(id_tg_user, path= PATH_DEFAULLT):# вышел, запускайте следующего
+#     sql = 'select status from ClientList WHERE id_tg_user =' + str(id_tg_user)
+#     status = connector(sql, path)[0]
+#     if status == 'inside':
+#         drop_client_tg_id(id_tg_user)
+#         send_message(str(first_client ()[0]), 'you_first')
+#         return True
+#     else:
+#         return False
 
 def upd_message(id_tg, msg,  path = PATH_DEFAULLT):#upd_message((150319,'aaaa'))
     sql = ''' UPDATE ClientList
@@ -157,3 +166,6 @@ def registr (id_tg_user, nickname='', tgname='', message='', path = PATH_DEFAULL
     send_message(id_tg_user,'you_last')
     return True
 
+def i_go_home(id_tg_user, path):
+    drop_client_tg_id(id_tg_user,path)
+    return True
