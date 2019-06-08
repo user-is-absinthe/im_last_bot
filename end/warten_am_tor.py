@@ -29,14 +29,12 @@ def con_get_one(sql):
     conn.close()
     return row
 
-#STG - HP, DMG, min_item
+#STG - HP, DMG, min_item, chnc_block
 #INL - MP, chnc_miss, win_exp, min_item
-#LCK - chnc_run, chnc_dodge, chnc_drop, chnc_crit
-#AGL - chnc_dodge, DMG, min_item
-#
-#
+#LCK - chnc_run, chnc_dodge, chnc_drop, win_money
+#AGL - chnc_dodge, DMG, min_item, , chnc_crit
 
-def start_defaullt():
+def begin_quest():
     sql1 = """create table if not exists Player
                           (id_tg_user integer PRIMARY KEY,
                           nickname text,
@@ -53,18 +51,25 @@ def start_defaullt():
                           chnc_run REAL,
                           chnc_block_dmg REAL, 
                           class text,
-                          FOREIGN KEY (pr_skill) REFERENCES Skill(id)
-                          FOREIGN KEY (ex_skill) REFERENCES Skill(id)
-                          FOREIGN KEY (def_skill) REFERENCES Skill(id)
-                          FOREIGN KEY (armor) REFERENCES Item(id)
-                          FOREIGN KEY (weapon) REFERENCES Item(id)
-                          FOREIGN KEY (amulet) REFERENCES Item(id)
-                          review text);
+                          review text,
+                          pr_skill text,
+                          ex_skill text,
+                          def_skill text,
+                          armor text,
+                          weapon text,
+                          amulet text,
+                          FOREIGN KEY (pr_skill) REFERENCES Skill(name_sk)
+                          FOREIGN KEY (ex_skill) REFERENCES Skill(name_sk)
+                          FOREIGN KEY (def_skill) REFERENCES Skill(name_sk)
+                          FOREIGN KEY (armor) REFERENCES Item(name_it)
+                          FOREIGN KEY (weapon) REFERENCES Item(name_it)
+                          FOREIGN KEY (amulet) REFERENCES Item(name_it)
+                          );
                        """
 
     sql2 = """create table if not exists Skill
                           (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          name text,
+                          name_sk text,
                           DMG INTEGER,
                           MP_cost INTEGER,
                           reload INTEGER 
@@ -86,7 +91,7 @@ def start_defaullt():
 
     sql3 = """create table if not exists Item
                           (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                          name text,
+                          name_it text,
                           DMG INTEGER, 
                           chnc_crit REAL,
                           chnc_miss REAL,
@@ -125,3 +130,15 @@ def start_defaullt():
     con_comm(sql2)
     con_comm(sql1)
     return True
+
+def insert_event():
+    pass
+
+def insert_item():
+    pass
+
+def insert_skill():
+    pass
+
+def insert_player():
+    pass
