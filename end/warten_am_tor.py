@@ -72,7 +72,7 @@ def begin_quest():
                           name_sk text,
                           DMG INTEGER,
                           MP_cost INTEGER,
-                          reload INTEGER 
+                          reload INTEGER, 
                           chnc_crit REAL,
                           chnc_miss REAL,
                           min_LVL INTEGER,
@@ -141,16 +141,21 @@ def insert_event(val):#10  insert_event( val =('test', 5, 5, 1, 1, 1, 1, 1, 0.1,
     con_comm(sql,val)
     return True
 
-def insert_item(val):#19  insert_item( val =('t_item', 5, 0.05, 0.1, 0.5, 0, 0, 10, 0, 0, 1, 1, 1, 1, 1, 't_class', 0, 1, 1, 't_weapon'))
+def insert_item(val):#19  insert_item( val =('t_item', 5, 0.05, 0.1, 0.5, 0, 0, 10, 0, 0, 1, 1, 1, 1, 't_class', 0, 1, 1, 't_weapon'))
     sql = '''INSERT INTO Item(name_it, DMG, chnc_crit, chnc_miss, chnc_drop, upd_block, upd_dodge, money, upd_HP, upd_MP, min_LVL, min_STG, min_INL, min_AGL, class, armor, weapon, amulet, review)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
     return True
 
-def insert_skill():
-    #(id, name_sk, DMG, MP_cost, reload chnc_crit, chnc_miss, min_LVL, min_STG, min_INL, min_AGL, upd_dodge, upd_HP, upd_MP, class, prim BLOB, ext BLOB, def BLOB, review)
-    pass
+def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1, 1, 1, 1, 0, 0, 0, 't_class', 1, 0, 0, 't_atack_sk'))
+    sql = '''INSERT INTO Skill(name_sk, DMG, MP_cost, reload, chnc_crit, chnc_miss, min_LVL, min_STG, min_INL, min_AGL, upd_dodge, upd_HP, upd_MP, class, prim, ext, def, review)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    con_comm(sql,val)
+    return True
 
-def insert_player():
-    #(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
-    pass
+
+def insert_player(val):#22 insert_player( val =(
+    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    con_comm(sql,val)
+    return True
