@@ -11,20 +11,20 @@ def con_comm(sql, value = []):
     conn.close()
     return True
 
-def con_get_all(sql):
+def con_get_all(sql, val =[]):
     path = PATH_DEFAULLT
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
-    cursor.execute(sql)
+    cursor.execute(sql, val)
     rows = cursor.fetchall()
     conn.close()
     return rows
 
-def con_get_one(sql):
+def con_get_one(sql, val =[]):
     path = PATH_DEFAULLT
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
-    cursor.execute(sql)
+    cursor.execute(sql, val)
     row = cursor.fetchone()
     conn.close()
     return row
@@ -136,6 +136,14 @@ def sel_all(table):
     rows = con_get_all(sql)
     return rows
 
+def sel_atr(table, id, atr):# sel_atr('Player', 123, 'pr_skill')
+    if table == 'Player':
+        sql = 'select '+ str(atr)+ ' from Player WHERE id_tg_user = ' + str(id)
+    else:
+        sql = 'select ' + str(atr) + ' from ' + str(table) +' WHERE id = ' + str(id)
+    row = con_get_one(sql)
+    return row[0]
+
 def insert_event(val):#10  insert_event( val =('test', 5, 5, 1, 1, 1, 1, 1, 0.1, 'test_event'))
     sql = '''INSERT INTO Event(name_ev, EXP, money, min_LVL, v1_STG, v2_INL, v3_LCK, v4_AGL, chnc_fail, review) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
@@ -154,8 +162,27 @@ def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1,
     return True
 
 
-def insert_player(val):#22 insert_player( val =(
-    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+def insert_only_player(val):#22 insert_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.1, 0.15, 0.1, 't_class', 'test'))
+    # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
+    #          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
     return True
+
+def equip_item(id_user, id_sk, sk_teg):
+    if sk_teg == 'pr':
+        sk_n = sel_atr('Skill', id_sk, 'name_sk')
+        sql = "update Player set pr_skill = 't_skill' where id_tg_user = 123"
+
+        pass
+    elif sk_teg == 'ext':
+        pass
+    elif sk_teg == 'def':
+        pass
+    else:
+        return False
+
+
+def set_skill():
+    pass
