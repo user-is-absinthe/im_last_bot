@@ -15,6 +15,8 @@ https://habr.com/ru/post/442800/
 
 PATH_TO_TOKEN = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/tiny_client/bot_token.txt'
 
+#  TODO: родина слышит стикер добавить
+
 
 if __name__ == '__main__':
     PATH_TO_LOG = '/Users/owl/Pycharm/PycharmProjects/im_last_bot/files/test.log'
@@ -57,8 +59,9 @@ bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=[
-    'start', 'help', 'reg', 'count', 'reason', 'game', 'word', 'get_all',
-    'go_away', 'next_user', 'stop', 'get_user', 'send_message', 'send_message_all'
+    'start', 'help', 'reg', 'count', 'reason', 'game', 'leave',
+    'word', 'get_all',
+    'go_away', 'next_user', 'get_user', 'send_message_all'
 ])
 def start_help(message):
     logging.info('User {0} (user id is {1}) send {2}.'.format(
@@ -69,7 +72,8 @@ def start_help(message):
 
     if message.text == '/start':
         to_send = 'Доброго времени суток.\nДля продолжения работы Вам необходимо зарегистрироваться.' + \
-                  '\nДля этого используйте команду /reg.'
+                  '\nДля этого используйте команду /reg.\nДля получения помощи нажмите /help.\n' \
+                  'Для ввода секретного слова введите /word.'
         # bot.send_message(message.from_user.id, 'first message')
         bot.reply_to(message, to_send)
     elif message.text == '/help':
@@ -77,6 +81,7 @@ def start_help(message):
                   '\t/help - вывод меню помощи\n' \
                   '\t/reg - регистрация нового пользователя\n' \
                   '\t/count - узнать свое место в очереди и ближайших соседей\n' \
+                  '\t/leave - покинуть очередь\n' \
                   '\t/word - ввод секретного слова\n' \
                   '\t/reason - уточнить причину посещения\n' \
                   '\t/game - поиграть в игрушку\n'
@@ -85,9 +90,7 @@ def start_help(message):
                       '\t/get_all - показать всех пользователей;\n' \
                       '\t/go_away - распустить очередь:\n' \
                       '\t/next_user - вызвать следующего по очереди пользователя\n' \
-                      '\t/stop - приостновить прием\n' \
                       '\t/get_user - вызвать конкретного пользователя\n' \
-                      '\t/send_message - отправить сообщение конкретному пользователю\n' \
                       '\t/send_message_all - отправить сообщение всем\n'
             to_send += special
         bot.send_message(message.from_user.id, to_send)
@@ -96,6 +99,10 @@ def start_help(message):
         pre_get_name(message=message)
     elif message.text == '/count':
         count_before_i = to_db.count_before(id_tg_user=message.from_user.id, path=PATH_TO_DB)
+        if count_before_i == 0:
+            to_send = 'Очередь отсутствует. Вы - первый. И последний.'
+            bot.send_message(message.from_user.id, to_send)
+            return 1
         prev_user_raw = to_db.prev_client(id_tg_user=message.from_user.id, path=PATH_TO_DB)
         prev_user = '{0} (@{1})'.format(prev_user_raw[2], prev_user_raw[3])
         to_send = 'Перед вами {0} человек в очереди.\nПредыдущий товарищ - {1}.'.format(count_before_i, prev_user)
@@ -113,14 +120,23 @@ def start_help(message):
         # send_message = 'Если вы видите это сообщение, а не игру, значит кое-кто кое-что так и не сделал.'
         send_message = 'Вы можете сыграть в игру перейдя по ссылке:\nhttps://biggest-brother.github.io/'
         bot.send_message(message.from_user.id, send_message)
+    elif message.text == '/leave':
+        user_id = message.from_user.id
+        logging.info('User {0} leave.'.format(user_id))
+        markup = types.ReplyKeyboardMarkup(row_width=2)
+        call_yes = types.KeyboardButton('Да')
+        call_no = types.KeyboardButton('Нет')
+        markup.add(call_yes, call_no)
+        bot.send_message(message.from_user.id, 'Вы действительно желаете покинуть очередь?', reply_markup=markup)
+        bot.register_next_step_handler(message, leave)
 
     elif message.text == '/get_all' and message.from_user.id in SECRET_USERS:
         all_users = to_db.all_client(PATH_TO_DB)
-        regular_row = '{0} пользователь (@{1}) хочет попасть к вам по причине {2}.\n'
+        regular_row = '{3}. {0} пользователь (@{1}) хочет попасть к вам по причине {2}.\n'
         all_rows = 'Список всех пользователей в порядке очередности:\n'
-        for user in all_users:
+        for index, user in enumerate(reversed(all_users)):
             all_rows += regular_row.format(
-                user[2], user[3], user[5]
+                user[2], user[3], user[5], index + 1
             )
         bot.send_message(message.from_user.id, all_rows)
     elif message.text == '/go_away' and message.from_user.id in SECRET_USERS:
@@ -133,8 +149,13 @@ def start_help(message):
         bot.send_message(message.from_user.id, 'Очередь успешно распущена.')
         to_db.drop_all_cl(PATH_TO_DB)
     elif message.text == '/next_user' and message.from_user.id in SECRET_USERS:
-        # TODO: change status this user and send message to next user
-        # TODO: test it
+        next_user = to_db.first_client(PATH_TO_DB)
+        send_message = 'Заходите!'
+        bot.send_message(next_user[0], send_message)
+        send_message = 'Сообщение отправлено пользователю.'
+        bot.send_message(message.from_user.id, send_message)
+        pass
+    elif message.text == '/get_user' and message.from_user.id in SECRET_USERS:
         all_users = to_db.all_client(PATH_TO_DB)
         keyboard = types.InlineKeyboardMarkup()
         for user in all_users:
@@ -144,18 +165,29 @@ def start_help(message):
             keyboard.add(types.InlineKeyboardButton(text=face_button, callback_data=user[0]))
         send_message = 'Выберите пользователя:'
         bot.send_message(message.from_user.id, text=send_message, reply_markup=keyboard)
+        send_message = 'Сообщение отправлено.'
+        bot.send_message(message.from_user.id, text=send_message)
         pass
-    elif message.text == '/stop' and message.from_user.id in SECRET_USERS:
-        # TODO: change status this user
-        pass
-    elif message.text == '/get_user' and message.from_user.id in SECRET_USERS:
-        # TODO: send message to next user
-        pass
-    elif message.text == '/send_message' and message.from_user.id in SECRET_USERS:
-        #
-        pass
+    # elif message.text == '/send_message' and message.from_user.id in SECRET_USERS:
+    #     all_users = to_db.all_client(PATH_TO_DB)
+    #     keyboard = types.InlineKeyboardMarkup()
+    #     for user in all_users:
+    #         face_button = '{0} пользователь хочет попасть к вам по причине {1}.'.format(
+    #             user[2], user[5]
+    #         )
+    #         keyboard.add(types.InlineKeyboardButton(text=face_button, callback_data=user[0]))
+    #     send_message = 'Выберите пользователя:'
+    #     bot.send_message(message.from_user.id, text=send_message, reply_markup=keyboard)
+    #     send_message = 'Сообщение отправлено.'
+    #     bot.send_message(message.from_user.id, text=send_message)
+    #     pass
     elif message.text == '/send_message_all' and message.from_user.id in SECRET_USERS:
-        pass
+        send_message = 'Напишите сообщение для ожидающих в очереди.'
+        bot.send_message(message.from_user.id, text=send_message)
+        bot.register_next_step_handler(message, message_to_all)
+    else:
+        send_message = 'Не балуй.'
+        bot.send_message(message.from_user.id, text=send_message)
 
 
 @bot.message_handler(content_types=['text'])
@@ -166,6 +198,41 @@ def get_text_message(message):
                                            'Не волнуйтесь, все будет записано.\n/help для помощи.')
 
 
+@bot.message_handler(content_types=['audio', 'document', 'photo', 'sticker', 'video', 'video_note', 'voice'])
+def catch_else(message):
+    logging.info('Catch content from {}.'.format(message.from_user.id))
+    bot.reply_to(message, 'Я все записываю!')
+    sticker = open('/Users/owl/Pycharm/PycharmProjects/im_last_bot/stickers/sticker_llgkguai.png', 'rb')
+    bot.send_sticker(message.from_user.id, sticker)
+    pass
+
+
+def message_to_all(message):
+    all_users = to_db.all_client(PATH_TO_DB)
+    print(all_users)
+    for user in all_users:
+        send_message = message.text
+        try:
+            bot.send_message(user[0], send_message)
+        except telebot.apihelper.ApiException:
+            pass
+    bot.send_message(message.from_user.id, 'Сообщение успешно доставлено.')
+    pass
+
+
+def leave(message):
+    markup = types.ReplyKeyboardRemove(selective=False)
+    if message.text == 'Да':
+        tg_id = message.from_user.id
+        to_db.drop_client_tg_id(id_tg=tg_id, path=PATH_TO_DB)
+        send_text = 'Теперь вы свободны от очереди.\nНо рады ли вы этому?'
+    elif message.text == 'Нет':
+        send_text = 'Хм... Ладно, в другой раз.'
+    else:
+        send_text = 'Не балуйтесь.'
+    bot.send_message(message.from_user.id, send_text, reply_markup=markup)
+
+
 def check_secret(message):
     if message.text == SECRET_WORD:
         send_text = 'Отлично, вам доступны новые команды. Воспользуйтесь командой /help.'
@@ -173,7 +240,7 @@ def check_secret(message):
         to_db.drop_client_tg_id(message.from_user.id, PATH_TO_DB)
         bot.send_message(message.from_user.id, send_text)
     else:
-        send_text = 'Неправильный секрет.'
+        send_text = 'Неправильное секретное слово.'
         bot.send_message(message.from_user.id, send_text)
     pass
 
@@ -195,7 +262,6 @@ def get_name(message):
     global PATH_TO_DB
     name = message.text
 
-    # TODO: add user id and name in base primary key id
     user_id = message.from_user.id
     tg_name = 'None' if message.from_user.username is None else message.from_user.username
 
@@ -225,7 +291,6 @@ def pre_reason(message):
     markup = types.ReplyKeyboardRemove(selective=False)
     if message.text == 'Да':
         text_message = 'Укажите причину для посещения.'
-        print(text_message)
         bot.send_message(message.from_user.id, text_message, reply_markup=markup)
         bot.register_next_step_handler(message, reason)
     elif message.text == 'Нет':
@@ -241,9 +306,16 @@ def pre_reason(message):
 
 def reason(message):
     global PATH_TO_DB
-    print('u a here')
     user_id = message.from_user.id
-    name = to_db.select_cl_id_tg(user_id, PATH_TO_DB)[2]
+    print(user_id)
+    print(to_db.select_cl_id_tg(user_id, PATH_TO_DB))
+    try:
+        name = to_db.select_cl_id_tg(user_id, PATH_TO_DB)[2]
+    except TypeError:
+        to_send = 'Сначала необходимо зарегистрироваться.\n' \
+                  'Используйте команду /reg.'
+        bot.send_message(message.from_user.id, to_send)
+        return 1
     user_reason = message.text
 
     markup = types.ReplyKeyboardMarkup(row_width=2)
@@ -288,9 +360,18 @@ def random_message(id_tg_user, text_message):
 def callback_worker(call):
     all_users = to_db.all_client(PATH_TO_DB)
     for user in all_users:
-        if user[0] == call.data:
+        if user[0] == int(call.data):
             send_message = 'Заходите в кабинет.'
             bot.send_message(user[0], send_message)
+            to_db.im_in(user[0], PATH_TO_DB)
 
+
+# while True:
+#     try:
+#         bot.polling(none_stop=False, interval=0)
+#     except Exception as exception:
+#         logging.error(exception)
+#         print('Sleep 5 sec.')
+#         time.sleep(5)
 
 bot.polling(none_stop=False, interval=0)
