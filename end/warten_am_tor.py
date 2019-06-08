@@ -52,14 +52,14 @@ def begin_quest():
                           chnc_block_dmg REAL, 
                           class text,
                           review text,
-                          backpack INTEGER.
+                          backpack INTEGER,
                           pr_skill text,
                           ex_skill text,
                           def_skill text,
                           armor text,
                           weapon text,
                           amulet text,
-                          FOREIGN KEY (baclpack) REFERENCES Backpack(id)
+                          FOREIGN KEY (backpack) REFERENCES Backpack(id)
                           FOREIGN KEY (pr_skill) REFERENCES Skill(name_sk)
                           FOREIGN KEY (ex_skill) REFERENCES Skill(name_sk)
                           FOREIGN KEY (def_skill) REFERENCES Skill(name_sk)
@@ -68,8 +68,9 @@ def begin_quest():
                           FOREIGN KEY (amulet) REFERENCES Item(name_it)
                           );
                        """
+
     sql1 = """create table if not exists Backpack
-                          (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          (id INTEGER PRIMARY KEY,
                           item1 text,
                           item2 text,
                           item3 text,
@@ -178,18 +179,24 @@ def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1,
     con_comm(sql,val)
     return True
 
-
-def insert_only_player(val):#22 insert_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.1, 0.15, 0.1, 't_class', 'test'))
-    # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
+def insert_only_player(val):#22 insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.1, 0.15, 0.1, 't_class', 'test', 123))
+    # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
     #          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    sql = '''INSERT INTO Backpack(id) VALUES (''' + str(val[0]) + ')'
+    try:
+        con_comm(sql)
+    except sqlite3.IntegrityError:
+#TODO: сделать уведомление и возможность пересоздания
+        print('your backpack is already exist')
+    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
     return True
 
-def set_skill (id_user, id_sk, sk_teg):
+def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
     sk_n = sel_atr('Skill', id_sk, 'name_sk')
-    if sk_teg == 'pr':
+
+    if sk_teg == 'prim':
         sk_type = 'pr_skill'
     elif sk_teg == 'ext':
         sk_type = 'ext_skill'
@@ -197,8 +204,33 @@ def set_skill (id_user, id_sk, sk_teg):
         sk_type = 'def_skill'
     else:
         return False
-    sql = 'update Player set '+ sk_type +' = '+ str(sk_n) +' where id_tg_user = '+ str(id_user)
 
+# TODO: сделать уведомлениz
+    if sel_atr('Skill', id_sk, 'min_LVL') > sel_atr('Player', id_user, 'LVL'):
+        print('need more lvl')
+        return False
+
+    if sel_atr('Skill', id_sk, 'min_STG') > sel_atr('Player', id_user, 'STG'):
+        print('need more stg')
+        return False
+
+    if sel_atr('Skill', id_sk, 'min_INL') > sel_atr('Player', id_user, 'INL'):
+        print('need more inl')
+        return False
+
+    if sel_atr('Skill', id_sk, 'min_AGL') > sel_atr('Player', id_user, 'AGL'):
+        print('need more agl')
+        return False
+
+    if sel_atr('Skill', id_sk, str(sk_teg)) == 0:
+        print('change skill_type')
+        return False
+
+    sql = 'update Player set '+ sk_type +' = \''+ str(sk_n) +'\' where id_tg_user = '+ str(id_user)
+    con_comm(sql)
+    print('Skill ', sk_n, 'equip')
+ #TODO: Не забыть об изменениях характеристик героя
+    return True
 
 def equip_item():
     pass
