@@ -2,11 +2,11 @@ import sqlite3
 
 PATH_DEFAULLT = 'wat.db'
 
-def con_comm(sql):
+def con_comm(sql, value = []):
     path = PATH_DEFAULLT
     conn = sqlite3.connect(path)
     cursor = conn.cursor()
-    cursor.execute(sql)
+    cursor.execute(sql, value)
     conn.commit()
     conn.close()
     return True
@@ -131,8 +131,15 @@ def begin_quest():
     con_comm(sql1)
     return True
 
-def insert_event():
-    pass
+def sel_all(table):
+    sql = 'select * from ' + str(table)
+    rows = con_get_all(sql)
+    return rows
+
+def insert_event(val):# insert_event( val=('test', 5, 5, 1, 1, 1, 1, 1, 0.1, 'test_event'))
+    sql = '''INSERT INTO Event(name, EXP, money, min_LVL, v1_STG, v2_INL, v3_LCK, v4_AGL, chnc_fail, review) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    con_comm(sql,val)
+    return True
 
 def insert_item():
     pass
