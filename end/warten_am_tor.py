@@ -35,7 +35,7 @@ def con_get_one(sql, val =[]):
 #AGL - chnc_dodge, DMG, min_item, , chnc_crit
 
 def begin_quest():
-    sql1 = """create table if not exists Player
+    sql0 = """create table if not exists Player
                           (id_tg_user integer PRIMARY KEY,
                           nickname text,
                           HP INTEGER,
@@ -52,18 +52,34 @@ def begin_quest():
                           chnc_block_dmg REAL, 
                           class text,
                           review text,
+                          backpack INTEGER.
                           pr_skill text,
                           ex_skill text,
                           def_skill text,
                           armor text,
                           weapon text,
                           amulet text,
+                          FOREIGN KEY (baclpack) REFERENCES Backpack(id)
                           FOREIGN KEY (pr_skill) REFERENCES Skill(name_sk)
                           FOREIGN KEY (ex_skill) REFERENCES Skill(name_sk)
                           FOREIGN KEY (def_skill) REFERENCES Skill(name_sk)
                           FOREIGN KEY (armor) REFERENCES Item(name_it)
                           FOREIGN KEY (weapon) REFERENCES Item(name_it)
                           FOREIGN KEY (amulet) REFERENCES Item(name_it)
+                          );
+                       """
+    sql1 = """create table if not exists Backpack
+                          (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                          item1 text,
+                          item2 text,
+                          item3 text,
+                          item4 text,
+                          item5 text,
+                          FOREIGN KEY (item1) REFERENCES Item(name_it)
+                          FOREIGN KEY (item2) REFERENCES Item(name_it)
+                          FOREIGN KEY (item3) REFERENCES Item(name_it)
+                          FOREIGN KEY (item4) REFERENCES Item(name_it)
+                          FOREIGN KEY (item5) REFERENCES Item(name_it)
                           );
                        """
 
@@ -129,6 +145,7 @@ def begin_quest():
     con_comm(sql3)
     con_comm(sql2)
     con_comm(sql1)
+    con_comm(sql0)
     return True
 
 def sel_all(table):
@@ -170,19 +187,18 @@ def insert_only_player(val):#22 insert_player( val =(123, 't_user', 20, 9, 0, 0,
     con_comm(sql,val)
     return True
 
-def equip_item(id_user, id_sk, sk_teg):
+def set_skill (id_user, id_sk, sk_teg):
+    sk_n = sel_atr('Skill', id_sk, 'name_sk')
     if sk_teg == 'pr':
-        sk_n = sel_atr('Skill', id_sk, 'name_sk')
-        sql = "update Player set pr_skill = 't_skill' where id_tg_user = 123"
-
-        pass
+        sk_type = 'pr_skill'
     elif sk_teg == 'ext':
-        pass
+        sk_type = 'ext_skill'
     elif sk_teg == 'def':
-        pass
+        sk_type = 'def_skill'
     else:
         return False
+    sql = 'update Player set '+ sk_type +' = '+ str(sk_n) +' where id_tg_user = '+ str(id_user)
 
 
-def set_skill():
+def equip_item():
     pass
