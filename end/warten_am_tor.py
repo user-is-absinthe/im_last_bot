@@ -212,8 +212,22 @@ def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1,
 #LCK - chnc_run, chnc_dodge, chnc_drop, win_money
 #AGL - chnc_dodge, DMG, min_item, , chnc_crit
 
+def upd_lvl(id_user):
+    exp = sel_atr('Player', id_user, 'EXP')
+    lvl = sel_atr('Player', id_user, 'LVL')
+    exp_lvl = 1+ int(10*lvl*(1 + 0.25* (lvl-1)))
+    while exp > exp_lvl:
+        lvl = lvl +1
+        exp_lvl = 1 + int(10 * lvl * (1 + 0.25 * (lvl - 1)))
+    upd_player_stat(id_user, ['LVL'], str(lvl))
+    return True
 
-def gen_chnc(LVL, STG, INL, LCK, AGL):
+def gen_stat(LVL, STG, INL):
+    HP = 5 + LVL*3 + STG*3
+    MP = 5 + LVL*3 + INL*3
+    return (HP, MP)
+
+def gen_chnc(LVL, STG, INL, LCK, AGL):#генерация вторичных характеристик из первичных
     LVL = int (LVL)
     STG = int (STG)
     INL = int (INL)
@@ -223,7 +237,7 @@ def gen_chnc(LVL, STG, INL, LCK, AGL):
     if c_dodge > 0.9: c_dodge = 0.9
     c_run = 0.25-LVL*0.05 + LCK*0.1
     if c_run > 0.9: c_run = 0.9
-    c_drop = 0.05 + 0.01*LVL + 0.1*LCK
+    c_drop = 0.35 + 0.05*LVL + 0.1*LCK
     if c_drop > 0.9: c_drop = 0.9
     c_block_dmg = 0.25 + 0.05*LVL + STG*0.125
     if c_block_dmg > 0.9: c_block_dmg = 0.9
@@ -371,14 +385,14 @@ def put_out_backpack(it_num, id_user):
     return True
 
 
-def found_item(id_user):
+def found_item(id_user):# подбор лута
     if sel_atr('Backpack', id_user, 'item5') is not None:
         print('Backpack full')
         return False
     p_drop = sel_atr('Player', id_user, 'chnc_drop_p')
     p_item_drop = np.rand()
     print(p_drop, p_item_drop)
-    if p_drop > p_item_drop:
+    if p_drop > p_item_drop:#выпадет ли что-то с моба
         sql = 'select id, chnc_drop from Item'
         it_list = con_get_all(sql)
         n = len(it_list)
@@ -390,10 +404,10 @@ def found_item(id_user):
         S_=1/sum(p)
         for i in range(0, n):
             p[i] = p[i] * S_
-        new_item_id = int(np.choice(id_it,1,p)[0])
+        new_item_id = int(np.choice(id_it,1,p)[0])#что именно выпадет
         it_name = sel_atr('Item', new_item_id, 'name_it')
         print('Found ', it_name)
-        i = put_in_backpack(new_item_id, id_user)
+        i = put_in_backpack(new_item_id, id_user) #предмет отправляется в рюкзак
         print(it_name,' is in the pocket ',i)
         return True
     else:
