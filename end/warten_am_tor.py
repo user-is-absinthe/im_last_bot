@@ -47,9 +47,13 @@ def begin_quest():
                           INL INTEGER,
                           LCK INTEGER,
                           AGL INTEGER,
+                          chnc_miss_p REAL,
+                          chnc_crit_p REAL,
+                          chnc_drop_p REAL, 
                           chnc_dodge REAL,
                           chnc_run REAL,
-                          chnc_block_dmg REAL, 
+                          chnc_block_dmg REAL,
+                          blk_dmg REAL, 
                           class text,
                           review text,
                           backpack INTEGER,
@@ -109,11 +113,12 @@ def begin_quest():
     sql3 = """create table if not exists Item
                           (id INTEGER PRIMARY KEY AUTOINCREMENT,
                           name_it text,
-                          DMG INTEGER, 
+                          DMG INTEGER,
+                          BLK REAL, 
                           chnc_crit REAL,
                           chnc_miss REAL,
                           chnc_drop REAL,                          
-                          upd_block REAL,
+                          upd_ch_block REAL,
                           upd_dodge REAL,
                           money INTEGER, 
                           upd_HP INTEGER,
@@ -162,14 +167,27 @@ def sel_atr(table, id, atr):# sel_atr('Player', 123, 'pr_skill')
     row = con_get_one(sql)
     return row[0]
 
+def sel_sk_id(sk_name):
+    sql = 'select id from Skill WHERE  name_sk = ?'
+    row = con_get_one(sql, [sk_name])
+    return int(row[0])
+
+def upd_player_stat(id_user, atr, val):#upd_player_stat(123, ('HP', 'MP'), (10,15))
+    i=0
+    for a in atr:
+        sql = 'update Player set ' + str(a) + ' = ? where id_tg_user = ?'
+        con_comm(sql, (val[i],id_user))
+        i=i+1
+    return True
+
 def insert_event(val):#10  insert_event( val =('test', 5, 5, 1, 1, 1, 1, 1, 0.1, 'test_event'))
     sql = '''INSERT INTO Event(name_ev, EXP, money, min_LVL, v1_STG, v2_INL, v3_LCK, v4_AGL, chnc_fail, review) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
     return True
 
-def insert_item(val):#19  insert_item( val =('t_item', 5, 0.05, 0.1, 0.5, 0, 0, 10, 0, 0, 1, 1, 1, 1, 't_class', 0, 1, 1, 't_weapon'))
-    sql = '''INSERT INTO Item(name_it, DMG, chnc_crit, chnc_miss, chnc_drop, upd_block, upd_dodge, money, upd_HP, upd_MP, min_LVL, min_STG, min_INL, min_AGL, class, armor, weapon, amulet, review)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+def insert_item(val):#19  insert_item( val =('t_item', 5, 0.2, 0.7, 0.05, 0.1, 0.5, 0.05, 10, 0, 0, 1, 1, 1, 1, 't_class', 0, 1, 1, 't_weapon'))
+    sql = '''INSERT INTO Item(name_it, DMG, BLK, chnc_crit, chnc_miss, chnc_drop, upd_ch_block, upd_dodge, money, upd_HP, upd_MP, min_LVL, min_STG, min_INL, min_AGL, class, armor, weapon, amulet, review)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
     return True
 
@@ -179,7 +197,35 @@ def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1,
     con_comm(sql,val)
     return True
 
-def insert_only_player(val):#22 insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.1, 0.15, 0.1, 't_class', 'test', 123))
+#STG - HP, DMG, min_item, chnc_block
+#INL - MP, chnc_miss, win_exp, min_item
+#LCK - chnc_run, chnc_dodge, chnc_drop, win_money
+#AGL - chnc_dodge, DMG, min_item, , chnc_crit
+
+#TODO: генерация
+def gen_chnc(LVL, STG, INL, LCK, AGL):
+    LVL = int (LVL)
+    STG = int (STG)
+    INL = int (INL)
+    LCK = int (LCK)
+    AGL = int (AGL)
+    c_dodge = 0.025 + 0.01*LVL + 0.025*(AGL+LCK)
+    if c_dodge > 0.9: c_dodge = 0.9
+    c_run = 0.25-LVL*0.05 + LCK*0.1
+    if c_run > 0.9: c_run = 0.9
+    c_drop = 0.05 + 0.01*LVL + 0.1*LCK
+    if c_drop > 0.9: c_drop = 0.9
+    c_block_dmg = 0.25 + 0.05*LVL + STG*0.125
+    if c_block_dmg > 0.9: c_block_dmg = 0.9
+    c_crit = 0.01 + 0.005*LVL + 0.05*AGL
+    if c_crit > 0.9: c_crit = 0.9
+    c_miss = 1 - LVL*0.05 - INL*0.2
+    if c_miss > 0.9: c_miss = 0.9
+    if c_miss < 0.1: c_miss = 0.1
+    return (c_miss, c_crit, c_drop, c_dodge, c_run, c_block_dmg)
+
+
+def insert_only_player(val): #insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.5, 't_class', 'test'))
     # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
     #          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     sql = '''INSERT INTO Backpack(id) VALUES (''' + str(val[0]) + ')'
@@ -188,12 +234,24 @@ def insert_only_player(val):#22 insert_only_player( val =(123, 't_user', 20, 9, 
     except sqlite3.IntegrityError:
 #TODO: сделать уведомление и возможность пересоздания
         print('your backpack is already exist')
-    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack) 
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-    con_comm(sql,val)
+
+    (chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg) = gen_chnc(val[6],val[7],val[8],val[9], val[10])
+
+    sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL,
+             chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg, blk_dmg, class, review, backpack) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
+    value = (val[0],val[1],val[2], val[3],val[4],val[5],val[6],val[7],val[8],val[9],val[10],
+             chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg,
+             val[11],val[12],val[13], val[0])
+    try:
+        con_comm(sql,value)
+    except sqlite3.IntegrityError:
+        print('you is already exist')
     return True
 
 def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
+
+
     sk_n = sel_atr('Skill', id_sk, 'name_sk')
 
     if sk_teg == 'prim':
@@ -226,11 +284,34 @@ def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
         print('change skill_type')
         return False
 
+    prev_sk = sel_atr('Player', id_user, sk_type)
+    if prev_sk is not None:
+        pr_sk_id = sel_sk_id(prev_sk)
+        HP_sk = sel_atr('Skill', pr_sk_id, 'upd_HP')
+        MP_sk = sel_atr('Skill', pr_sk_id, 'upd_MP')
+        c_d_sk = sel_atr('Skill', pr_sk_id, 'upd_dodge')
+    else:
+        HP_sk = 0;
+        MP_sk =0;
+        c_d_sk = 0;
+
     sql = 'update Player set '+ sk_type +' = \''+ str(sk_n) +'\' where id_tg_user = '+ str(id_user)
     con_comm(sql)
     print('Skill ', sk_n, 'equip')
- #TODO: Не забыть об изменениях характеристик героя
+
+
+    p_dodge = sel_atr('Skill', id_sk, 'upd_dodge') + sel_atr('Player', id_user, 'chnc_dodge') - c_d_sk
+    if p_dodge> 0.9:
+        p_dodge = 0.9
+    atr_sk = ('HP', 'MP', 'chnc_dodge')
+    val_sk = (sel_atr('Skill', id_sk, 'upd_HP')+sel_atr('Player', id_user, 'HP') - HP_sk,
+              sel_atr('Skill', id_sk, 'upd_MP')+sel_atr('Player', id_user, 'MP') - MP_sk,
+              p_dodge
+              )
+
+    upd_player_stat(id_user, atr_sk, val_sk)
     return True
 
+# TODO: Не забыть об изменениях характеристик героя
 def equip_item():
     pass
