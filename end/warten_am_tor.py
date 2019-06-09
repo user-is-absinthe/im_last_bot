@@ -381,13 +381,20 @@ def put_out_backpack(it_num, id_user):
     for i in range(1,6):
         if i != it_num:
             list.append(str_l[i])
+        else:
+            id_it = str_l[i]
     drop_str('Backpack', id_user)
     sql = '''INSERT INTO Backpack(id) VALUES (''' + str(id_user) + ')'
     con_comm(sql)
     for i in range(0,4):
         put_in_backpack(list[i],id_user)
-    return True
+    return id_it
 
+def item_in_pocket(it_num, id_user):
+    sql = 'select * from Backpack WHERE id = ?'
+    str_l = con_get_one(sql, [id_user])
+    id_it = str_l[it_num]
+    return id_it
 
 def found_item(id_user):# подбор лута
     if sel_atr('Backpack', id_user, 'item5') is not None:
@@ -420,5 +427,28 @@ def found_item(id_user):# подбор лута
     pass
 
 # TODO: Не забыть об изменениях характеристик героя
-def equip_item():
+def equip_item(id_user, it_n, it_type):
+    it_id = item_in_pocket(it_n, id_user)
+    if sel_atr('Item', it_id, str(it_type)) == 0:
+        print('change item_type')
+        return False
+
+    if sel_atr('Item', it_id, 'min_LVL') > sel_atr('Player', id_user, 'LVL'):
+        print('need more lvl')
+        return False
+
+    if sel_atr('Item', it_id, 'min_STG') > sel_atr('Player', id_user, 'STG'):
+        print('need more stg')
+        return False
+
+    if sel_atr('Item', it_id, 'min_INL') > sel_atr('Player', id_user, 'INL'):
+        print('need more inl')
+        return False
+
+    if sel_atr('Item', it_id, 'min_AGL') > sel_atr('Player', id_user, 'AGL'):
+        print('need more agl')
+        return False
+
+
+    put_out_backpack(it_n, id_user)
     pass
