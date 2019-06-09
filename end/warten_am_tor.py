@@ -1,4 +1,6 @@
 import sqlite3
+from numpy import random as np
+
 
 PATH_DEFAULLT = 'wat.db'
 PATH_JPG = '\wat_img' #+ type+'_'+name+'.jpg'
@@ -155,6 +157,10 @@ def begin_quest():
     con_comm(sql0)
     return True
 
+def get_img_name(type, name):
+    img_name = PATH_JPG +str(type) + '_' + str(name) + '.jpg'
+    return img_name
+
 def sel_all(table):
     sql = 'select * from ' + str(table)
     rows = con_get_all(sql)
@@ -186,7 +192,10 @@ def insert_event(val):#10  insert_event( val =('test', 5, 5, 1, 1, 1, 1, 1, 0.1,
     con_comm(sql,val)
     return True
 
-def insert_item(val):#19  insert_item( val =('t_item', 5, 0.2, 0.7, 0.05, 0.1, 0.5, 0.05, 10, 0, 0, 1, 1, 1, 1, 't_class', 0, 1, 1, 't_weapon'))
+def insert_item(val):
+         #insert_item( val =('t_apok', 5, 0, 0.1, 0.05, 0.6, 0.1, 0, 10, 0, 0, 1, 1, 1, 1, 't_class', 0, 1, 0, 't_weapon'))
+          #insert_item( val=('ar_itm', 0, 0.7, 0, 0, 0.7, 0.5, 0.05, 5, 3, 4, 1, 1, 1, 1, 't_class', 1, 0, 0, 't_armor'))
+         #insert_item( val =('statue', 3, 0, 0, 0, 0.3, 0.3, 0.05, 15, -1, 5, 1, 1, 1, 1, 't_class', 0, 0, 1, 't_amulet'))
     sql = '''INSERT INTO Item(name_it, DMG, BLK, chnc_crit, chnc_miss, chnc_drop, upd_ch_block, upd_dodge, money, upd_HP, upd_MP, min_LVL, min_STG, min_INL, min_AGL, class, armor, weapon, amulet, review)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
@@ -203,7 +212,7 @@ def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1,
 #LCK - chnc_run, chnc_dodge, chnc_drop, win_money
 #AGL - chnc_dodge, DMG, min_item, , chnc_crit
 
-#TODO: генерация
+
 def gen_chnc(LVL, STG, INL, LCK, AGL):
     LVL = int (LVL)
     STG = int (STG)
@@ -226,7 +235,10 @@ def gen_chnc(LVL, STG, INL, LCK, AGL):
     return (c_miss, c_crit, c_drop, c_dodge, c_run, c_block_dmg)
 
 
-def insert_only_player(val): #insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.5, 't_class', 'test'))
+def insert_only_player(val):
+    # insert_only_player( val =(111, 'palladin', 25, 10, 0, 0, 1, 3, 2, 1, 2, 0.5, 't_class', 'test'))
+    # insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.5, 't_class', 'test'))
+    # insert_only_player( val =(100, 'tester', 10, 11, 0, 0, 1, 6, 0, 0, 0, 0.5, 't_class', 'test'))
     # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
     #          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     sql = '''INSERT INTO Backpack(id) VALUES (''' + str(val[0]) + ')'
@@ -250,9 +262,23 @@ def insert_only_player(val): #insert_only_player( val =(123, 't_user', 20, 9, 0,
         print('you is already exist')
     return True
 
+def drop_all(table):
+    sql = 'DROP TABLE '+ str(table)
+    con_comm(sql)
+    return True
+
+def drop_str(table, id_str):
+    sql = 'DELETE FROM ' + str(table) +' WHERE id = ' + str(id_str)
+    con_comm(sql)
+    return True
+
+def drop_player(id_user):
+    drop_str('Backpack', id_user)
+    sql = 'DELETE FROM Player WHERE id_tg_user = ?'
+    con_comm(sql,[str(id_user)])
+    return True
+
 def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
-
-
     sk_n = sel_atr('Skill', id_sk, 'name_sk')
 
     if sk_teg == 'prim':
@@ -312,6 +338,68 @@ def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
 
     upd_player_stat(id_user, atr_sk, val_sk)
     return True
+
+def put_in_backpack(it_id, id_user):
+    if sel_atr('Backpack', id_user, 'item5') is not None:
+        print('Backpack full')
+        return False
+    i=5
+    if sel_atr('Backpack', id_user, 'item4') is None:
+        i=4
+        if sel_atr('Backpack', id_user, 'item3') is None:
+            i=3
+            if sel_atr('Backpack', id_user, 'item2') is None:
+                i=2
+                if sel_atr('Backpack', id_user, 'item1') is None:
+                    i=1
+    sql = 'update Backpack set item'+str(i)+'= '+str(it_id)+' where id = '+str(id_user)
+    con_comm(sql)
+    return i
+
+def put_out_backpack(it_num, id_user):
+    sql = 'select * from Backpack WHERE id = ?'
+    str_l = con_get_one(sql, [id_user])
+    list = []
+    for i in range(1,6):
+        if i != it_num:
+            list.append(str_l[i])
+    drop_str('Backpack', id_user)
+    sql = '''INSERT INTO Backpack(id) VALUES (''' + str(id_user) + ')'
+    con_comm(sql)
+    for i in range(0,4):
+        put_in_backpack(list[i],id_user)
+    return True
+
+
+def found_item(id_user):
+    if sel_atr('Backpack', id_user, 'item5') is not None:
+        print('Backpack full')
+        return False
+    p_drop = sel_atr('Player', id_user, 'chnc_drop_p')
+    p_item_drop = np.rand()
+    print(p_drop, p_item_drop)
+    if p_drop > p_item_drop:
+        sql = 'select id, chnc_drop from Item'
+        it_list = con_get_all(sql)
+        n = len(it_list)
+        p = []
+        id_it = []
+        for i in range(0, n):
+            p.append(it_list[i][1])
+            id_it.append(it_list[i][0])
+        S_=1/sum(p)
+        for i in range(0, n):
+            p[i] = p[i] * S_
+        new_item_id = int(np.choice(id_it,1,p)[0])
+        it_name = sel_atr('Item', new_item_id, 'name_it')
+        print('Found ', it_name)
+        i = put_in_backpack(new_item_id, id_user)
+        print(it_name,' is in the pocket ',i)
+        return True
+    else:
+        print('New items not found')
+        return False
+    pass
 
 # TODO: Не забыть об изменениях характеристик героя
 def equip_item():
