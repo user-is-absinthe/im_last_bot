@@ -243,16 +243,19 @@ def gen_chnc(LVL, STG, INL, LCK, AGL):#генерация вторичных х�
     if c_block_dmg > 0.9: c_block_dmg = 0.9
     c_crit = 0.01 + 0.005*LVL + 0.05*AGL
     if c_crit > 0.9: c_crit = 0.9
-    c_miss = 1 - LVL*0.05 - INL*0.2
-    if c_miss > 0.9: c_miss = 0.9
-    if c_miss < 0.1: c_miss = 0.1
-    return (c_miss, c_crit, c_drop, c_dodge, c_run, c_block_dmg)
+    c_miss = 0.8 - LVL*0.15 - INL*0.2-(LCK+AGL)*0.05
+    if c_miss > 0.7: c_miss = 0.7
+    if c_miss < 0.05: c_miss = 0.05
+    blk_dmg = 0.15 + 0.01*(LVL+STG+INL+LCK+AGL)
+    if blk_dmg > 0.9: blk_dmg = 0.9
+    return (c_miss, c_crit, c_drop, c_dodge, c_run, c_block_dmg, blk_dmg)
 
 
-def insert_only_player(val):
-    # insert_only_player( val =(111, 'palladin', 25, 10, 0, 0, 1, 3, 2, 1, 2, 0.5, 't_class', 'test'))
-    # insert_only_player( val =(123, 't_user', 20, 9, 0, 0, 1, 2, 3, 2, 3, 0.5, 't_class', 'test'))
-    # insert_only_player( val =(100, 'tester', 10, 11, 0, 0, 1, 6, 0, 0, 0, 0.5, 't_class', 'test'))
+def insert_only_player(val):#вставка записи по основным статистикам, вторичные генерируются, ссылки на прдметы и скиллы указываются отдельно
+    # insert_only_player( val = id_tg_user, nickname, EXP, money, LVL, STG, INL, LCK, AGL, class, review
+    # insert_only_player( val =(111, 'palladin', 0, 0, 1, 4, 2, 1, 2, 't_class', 'test'))
+    # insert_only_player( val =(123, 't_user', 0, 0, 1, 2, 3, 2, 2, 't_class', 'test'))
+    # insert_only_player( val =(100, 'toster', 0, 0, 1, 3, 1, 3, 2, 't_class', 'tester'))
     # sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL, chnc_dodge, chnc_run, chnc_block_dmg, class, review, backpack, pr_skill, ex_skill, def_skill, armor, weapon, amulet)
     #          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     sql = '''INSERT INTO Backpack(id) VALUES (''' + str(val[0]) + ')'
@@ -262,14 +265,14 @@ def insert_only_player(val):
 #TODO: сделать уведомление и возможность пересоздания
         print('your backpack is already exist')
 
-    (chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg) = gen_chnc(val[6],val[7],val[8],val[9], val[10])
-
+    (chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg, blk_dmg) = gen_chnc(val[4],val[5],val[6],val[7], val[8])
+    (HP, MP) = gen_stat(val[4],val[5],val[6])
     sql = '''INSERT INTO Player(id_tg_user, nickname, HP, MP, EXP, money, LVL, STG, INL, LCK, AGL,
              chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg, blk_dmg, class, review, backpack) 
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
-    value = (val[0],val[1],val[2], val[3],val[4],val[5],val[6],val[7],val[8],val[9],val[10],
-             chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg,
-             val[11],val[12],val[13], val[0])
+    value = (val[0],val[1],HP, MP,val[2],val[3],val[4],val[5],val[6],val[7],val[8],
+             chnc_miss_p, chnc_crit_p, chnc_drop_p, chnc_dodge, chnc_run, chnc_block_dmg, blk_dmg,
+             val[9],val[10], val[0])
     try:
         con_comm(sql,value)
     except sqlite3.IntegrityError:
@@ -292,7 +295,8 @@ def drop_player(id_user):
     con_comm(sql,[str(id_user)])
     return True
 
-def set_skill (id_user, id_sk, sk_teg): # set_skill(123, 1, 'prim')
+def set_skill (id_user, id_sk, sk_teg): #экипировка доступного скилла в один из слотов
+    # set_skill(123, 1, 'prim')
     sk_n = sel_atr('Skill', id_sk, 'name_sk')
 
     if sk_teg == 'prim':
