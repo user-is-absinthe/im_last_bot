@@ -179,6 +179,12 @@ def sel_sk_id(sk_name):
     row = con_get_one(sql, [sk_name])
     return int(row[0])
 
+#по неясной причине вместо имен предметов в базу идут их айди
+def sel_it_id(it_name):
+    sql = 'select id from Item WHERE  name_it = ?'
+    row = con_get_one(sql, [it_name])
+    return int(row[0])
+
 def upd_player_stat(id_user, atr, val):#upd_player_stat(123, ('HP', 'MP'), (10,15))
     i=0
     for a in atr:
@@ -201,7 +207,9 @@ def insert_item(val):
     con_comm(sql,val)
     return True
 
-def insert_skill(val):#18 insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1, 1, 1, 1, 0, 0, 0, 't_class', 1, 0, 0, 't_atack_sk'))
+def insert_skill(val):
+    #insert_skill( val =('t_skill', 10, 3, 3, 0.05, 0.1, 1, 1, 1, 1, 0, 0, 0, 't_class', 1, 0, 0, 't_atack_sk'))
+    #insert_skill(val=('t_def_sk', 0, 4, 3, 0, 0, 1, 1, 1, 1, 0.1, 5, 5, 't_class', 0, 0, 1, 't_def_sk'))
     sql = '''INSERT INTO Skill(name_sk, DMG, MP_cost, reload, chnc_crit, chnc_miss, min_LVL, min_STG, min_INL, min_AGL, upd_dodge, upd_HP, upd_MP, class, prim, ext, def, review)
              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'''
     con_comm(sql,val)
@@ -336,9 +344,9 @@ def set_skill (id_user, id_sk, sk_teg): #экипировка доступног
         MP_sk = sel_atr('Skill', pr_sk_id, 'upd_MP')
         c_d_sk = sel_atr('Skill', pr_sk_id, 'upd_dodge')
     else:
-        HP_sk = 0;
-        MP_sk =0;
-        c_d_sk = 0;
+        HP_sk = 0
+        MP_sk =0
+        c_d_sk = 0
 
     sql = 'update Player set '+ sk_type +' = \''+ str(sk_n) +'\' where id_tg_user = '+ str(id_user)
     con_comm(sql)
@@ -371,9 +379,12 @@ def put_in_backpack(it_id, id_user):
                 if sel_atr('Backpack', id_user, 'item1') is None:
                     i=1
     sql = 'update Backpack set item'+str(i)+'= '+str(it_id)+' where id = '+str(id_user)
-    con_comm(sql)
+    try:
+        con_comm(sql)
+    except sqlite3.OperationalError:
+        print('NoneType insert')
     return i
-
+#TODO:проблемы со вставкой
 def put_out_backpack(it_num, id_user):
     sql = 'select * from Backpack WHERE id = ?'
     str_l = con_get_one(sql, [id_user])
@@ -387,7 +398,10 @@ def put_out_backpack(it_num, id_user):
     sql = '''INSERT INTO Backpack(id) VALUES (''' + str(id_user) + ')'
     con_comm(sql)
     for i in range(0,4):
-        put_in_backpack(list[i],id_user)
+        try:
+            put_in_backpack(list[i],id_user)
+        except TypeError:
+            print('NoneType insert')
     return id_it
 
 def item_in_pocket(it_num, id_user):
@@ -397,6 +411,11 @@ def item_in_pocket(it_num, id_user):
     return id_it
 
 def found_item(id_user):# подбор лута
+    try:
+        sel_atr('Backpack', id_user, 'item5')
+    except TypeError:
+        print("NoneType insert. Check id")
+        return False
     if sel_atr('Backpack', id_user, 'item5') is not None:
         print('Backpack full')
         return False
@@ -429,8 +448,12 @@ def found_item(id_user):# подбор лута
 # TODO: Не забыть об изменениях характеристик героя
 def equip_item(id_user, it_n, it_type):
     it_id = item_in_pocket(it_n, id_user)
+    if it_id is None:
+        print('Pocket is empty')
+        return False
+    it_name = sel_atr('Item',it_id, 'name_it')
     if sel_atr('Item', it_id, str(it_type)) == 0:
-        print('change item_type')
+        print('change item_type ')
         return False
 
     if sel_atr('Item', it_id, 'min_LVL') > sel_atr('Player', id_user, 'LVL'):
@@ -449,6 +472,47 @@ def equip_item(id_user, it_n, it_type):
         print('need more agl')
         return False
 
+    prev_it = sel_atr('Player', id_user, it_type)
+    if prev_it is not None:
+        pr_id = sel_it_id(prev_it)
+        HP_it = sel_atr('Item', pr_id, 'upd_HP')
+        MP_it = sel_atr('Item', pr_id, 'upd_MP')
+        c_dod = sel_atr('Item', pr_id, 'upd_dodge')
+        c_blk = sel_atr('Item', pr_id, 'upd_ch_block')
+    else:
+        HP_it = 0
+        MP_it =0
+        c_dod = 0
+        c_blk = 0
 
+    sql = 'update Player set ' + it_type + ' = \'' + str(it_name) + '\' where id_tg_user = ' + str(id_user)
+    con_comm(sql)
+    print('Item ', it_name, 'equip')
+    # устраняем влияние прошлого предмета
+    p_dodge = sel_atr('Item', it_id, 'upd_dodge') + sel_atr('Player', id_user, 'chnc_dodge') - c_dod
+    if p_dodge > 0.9:
+        p_dodge = 0.9
+
+    p_blk = sel_atr('Item', it_id, 'upd_ch_block') + sel_atr('Player', id_user, 'chnc_block_dmg') - c_blk
+    if p_blk > 0.9:
+        p_blk = 0.9
+
+    blk_it_n=sel_atr('Item', it_id, 'BLK')
+    blk_pl= gen_chnc(sel_atr('Player', id_user, 'LVL'),
+                     sel_atr('Player', id_user, 'STG'),
+                     sel_atr('Player', id_user, 'INL'),
+                     sel_atr('Player', id_user, 'LCK'),
+                     sel_atr('Player', id_user, 'AGL')
+                     )[-1]
+    BLK = max(blk_pl, blk_it_n) # блок считается как максимум от нового прдмета и стат игрока без предметов
+    atr_sk = ('HP', 'MP', 'chnc_dodge', 'chnc_block_dmg', 'blk_dmg')
+    val_sk = (sel_atr('Item', it_id, 'upd_HP') + sel_atr('Player', id_user, 'HP') - HP_it,
+              sel_atr('Item', it_id, 'upd_MP') + sel_atr('Player', id_user, 'MP') - MP_it,
+              p_dodge,
+              p_blk,
+              BLK
+              )
+
+    upd_player_stat(id_user, atr_sk, val_sk)
     put_out_backpack(it_n, id_user)
-    pass
+    return True
