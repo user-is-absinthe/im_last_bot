@@ -1,6 +1,7 @@
 import sqlite3
 
 PATH_DEFAULLT = 'wat.db'
+PATH_JPG = '\wat_img' #+ type+'_'+name+'.jpg'
 
 def con_comm(sql, value = []):
     path = PATH_DEFAULLT
