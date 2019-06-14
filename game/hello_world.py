@@ -1,1 +1,0 @@
-print('hell_word')
