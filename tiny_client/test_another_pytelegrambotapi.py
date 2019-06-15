@@ -98,6 +98,7 @@ def start_help(message):
     elif message.text == '/reg':
         pre_get_name(message=message)
     elif message.text == '/count':
+        # TODO: правильный порядок при определении следующего / предыдущего
         count_before_i = to_db.count_before(id_tg_user=message.from_user.id, path=PATH_TO_DB)
         if count_before_i == 0:
             to_send = 'Очередь отсутствует. Вы - первый. И последний.'
@@ -202,7 +203,7 @@ def get_text_message(message):
 def catch_else(message):
     logging.info('Catch content from {}.'.format(message.from_user.id))
     bot.reply_to(message, 'Я все записываю!')
-    sticker = open('/Users/owl/Pycharm/PycharmProjects/im_last_bot/stickers/sticker_llgkguai.png', 'rb')
+    sticker = open('/Users/owl/Pycharm/PycharmProjects/im_last_bot/stickers/sticker_xux_p9wi.png', 'rb')
     bot.send_sticker(message.from_user.id, sticker)
     pass
 
